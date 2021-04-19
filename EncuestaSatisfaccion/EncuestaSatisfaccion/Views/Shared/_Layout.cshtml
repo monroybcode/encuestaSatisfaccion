@@ -1,0 +1,420 @@
+﻿
+<style>
+    .nav-item {
+        cursor: pointer;
+    }
+
+    .DivLoader {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: fixed;
+        z-index: 5000;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+
+    .smrg {
+        margin-left: 12px !important;
+    }
+
+    /* Safari */
+    @@-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @@-webkit-keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuestas RH</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link href="~/Scripts/node_modules/font-awesome/css/all.css" rel="stylesheet">
+    <link href="~/Content/style.css?v=1.12" rel="stylesheet" />
+    <link href="~/Content/Site.css?1.12" rel="stylesheet" />
+    <link href="~/Content/AutoComplete.css" rel="stylesheet" />
+    <link rel="stylesheet/less" type="text/css" href="~/Content/style.sass" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/Scripts")
+    <script src="~/Scripts/FunctionsJS.js?1.12"></script>
+    <script src="~/Scripts/SiteJS.js?V=11"></script>
+    <script src="~/Scripts/Autocomplete.js"></script>
+    @RenderSection("scripts", required: false)
+
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed  pace-done  sidebar-lg-show">
+    <!--brand-minimized sidebar-minimized-->
+    <div class="DivLoader" id="DivLoader" style="display:none">
+        <div class="loader"></div>
+    </div>
+    <header class="app-header navbar">
+        <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show" id="MMenu" style="z-index:9999;position:absolute">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" style="width:100%;position:absolute" padding-bottom:5px;">
+            <img class="navbar-brand-minimized" src="~/images/logo-small.png" id="imagen" width="170" style="padding-top:9px;padding-bottom:9px;padding-left:9px;" alt="Logo starmedica">
+        </a>
+        <a style="margin-left:2vw; padding-top:20px;" class="RM"> </a>
+        <ul class="nav navbar-nav ml-auto" style="padding-top:10px;">
+            <li class="RM">
+                <div>
+                    <span style="font-size:14px;font-weight:400;"> Bienvenido: @Session["Nombre"] | @Session["Rol"] </span>
+                </div>
+                <div style="text-align:right; padding-bottom:5px;">
+                    <span style="font-size:14px;font-weight:400;">Última conexión: @Session["UIngreso"] </span>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-circle fa-2x"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" id="logOut">
+                    <a class="dropdown-item" href="#">
+                        Cerrar sesión
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </header>
+
+    <div class="app-body" style="margin-top:55px">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    @if (Session["F3"].ToString() == "1")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="AbrirVista('/CapturaEncuestados/IndexP')">
+                                <i class="nav-icon fas fa-pen-square"></i> Captura de Encuestados
+                            </a>
+                        </li>
+                    }
+                    @if (Session["F4"].ToString() == "1")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="CapturaVig()">
+                                <i class="nav-icon fas fa-pen-alt"></i>Vigencia de Encuestas
+                            </a>
+                        </li>
+                    }
+                    @if (Session["F5"].ToString() == "1")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="AbrirVista('/ReporteRespuestas/IndexP')">
+                                <i class="nav-icon fas fa-file-contract"></i>Reporte Respuestas
+                            </a>
+                        </li>
+                    }
+                    @* @if (Session["F7"].ToString() == "1")
+        {
+            <li class="nav-item">
+                <a class="nav-link" onclick="AbrirVista('/Directorio/IndexP')">
+                    <i class="nav-icon fas fa-home"></i> Directorio
+                </a>
+            </li>
+        }*@
+                    @*@if (Session["F8"].ToString() == "1")
+        {
+            <li class="nav-item">
+                <a class="nav-link" onclick="">
+                    <i class="nav-icon fas fa-database"></i>Sincronizar BD
+                </a>
+            </li>
+        }*@
+                    @*@if (Session["F5"].ToString() == "1" || Session["F6"].ToString() == "1")
+        {
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#" title="Configuración de usuarios">
+                    <i class="nav-icon fas fa-info"></i> Reportes
+                </a>
+                <ul class="nav-dropdown-items">
+                    @if (Session["F5"].ToString() == "1")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="AbrirVista('/ReporteE/IndexP')">
+                                <i class="nav-icon fas fa-id-card smrg"></i>  Gafetes No Entregados
+                            </a>
+                        </li>
+                    }
+                    @if (Session["F6"].ToString() == "1")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="AbrirVista('/ReporteVP/IndexP')">
+                                <i class="nav-icon fas fa-calendar smrg"></i>  Visitas por Periodo
+                            </a>
+                        </li>
+                    }
+
+
+                </ul>
+            </li>
+        }*@
+                    @if (Session["F1"].ToString() == "1" || Session["F2"].ToString() == "1")
+                    {
+                        <li class="nav-item nav-dropdown">
+                            <a class="nav-link nav-dropdown-toggle" href="#" title="Configuración de usuarios">
+                                <i class="nav-icon fas fa-user-cog"></i> Configuración
+                            </a>
+                            <ul class="nav-dropdown-items">
+                                @if (Session["F1"].ToString() == "1")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" onclick="AbrirVista('/Users/IndexP')">
+                                            <i class="nav-icon fas fa-users smrg"></i> Gestión de Usuarios
+                                        </a>
+                                    </li>
+
+                                }
+                                @if (Session["F2"].ToString() == "1")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" onclick="AbrirVista('/Roles/IndexP')">
+                                            <i class="nav-icon fas fa-user-alt smrg"></i> Roles
+                                        </a>
+                                    </li>
+                                }
+
+
+
+
+
+                            </ul>
+                        </li>
+                    }
+
+
+
+
+
+                </ul>
+            </nav>
+            <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+        </div>
+
+        <main class="main">
+
+            <div class="container-fluid" style="margin-top:5px">
+                <div class="animated fadeIn">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <div id="ContenedorVista">
+                                @RenderBody()
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+
+
+
+    <footer class="footer">
+        <div id="adn"></div>
+        <div class="grey-space">
+            <img src="../images/espacio-humano.png" class="slogan-space-manager" alt="">
+        </div>
+    </footer>
+
+
+
+
+</body>
+
+</html>
+
+<div class="modal" tabindex="-1" role="dialog" id="modalLogin">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header colorBack row" style="font-family: HelveticaNeue35thin;">
+                <div class="col-md-4"></div>
+                <div class="col-md-4" style="text-align:center"><h5 class="modal-title">Vigencia de Encuestas</h5></div>
+                <div class="col-md-4">
+                </div>
+            </div>
+            <div class="modal-body" style="text-align:center; padding:!0px;">
+                <div class="margenLogin" id="formLogin">
+                    <div style="padding-top:20px;"><span>La vigencia esta establecida en días</span></div>
+                    <div style="padding-top:20px;"><input type="number" min="0" step="1"  class="form-control InputLogin"  id="vigencia" required /></div>
+                    <div id="divpass" style="padding-top:20px;"></div>
+                    <div style="padding-top:20px;"> <button type="submit" class="btn btn-star-medica" id="btnIniciar" onclick="GuardarVig()" style="width:100%">Guardar</button></div>
+                    <div style="padding-top:20px; padding-bottom:30px;"><span class="error" style="color:red"></span></div>
+                </div>
+            </div>
+            <div class="modal-footer colorBack">
+                <button type="button" class="btn btn-star-medica" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function CapturaVig() {
+        $.ajax({
+            url: '/CapturaEncuestados/GetDiasVig',
+            cache: false, type: "POST",
+            success: function (data) {
+                $("#vigencia").val(data.d);
+            }
+        });
+        $("#modalLogin").modal("show");
+    }
+
+    $('#logOut').click(function (e) {
+        $.ajax({
+            url: '/Account/LogOut',
+            cache: false, 
+            success: function (data) {
+                window.location.href = '/Account/Login';
+            }
+        });
+    });
+
+    function GuardarVig() {
+        if ($("#vigencia").val() == 0) {
+            MNotif("Debe capturar los días de vigencia para las encuestas", "warning")
+        } else {
+        $.ajax({
+            url: '/CapturaEncuestados/SetDiasVig',
+            cache: false, type: "POST",
+            data: { dias: $("#vigencia").val() },
+            success: function (data) {
+                if (data.R == 1) {
+                    MNotif("Días de vigencia actualizados", "notify");
+                    $("#modalLogin").modal("hide");
+                }
+            }
+        });
+        }
+    }
+
+    var abriendovista = false;
+    function AbrirVista(opcion) {
+        if (abriendovista == false) {
+            abriendovista = true;
+            $("#DivLoader").show();
+            $.ajax({
+                url: opcion,
+                type: 'POST',
+                success: function (data) {
+                    $("#ContenedorVista").empty()
+                    $("#ContenedorVista").html(data);
+                    $("#DivLoader").hide();
+                    abriendovista = false
+                }, error: function (xhr, type, error) {
+                    abriendovista = false
+                    if (xhr.status == 403) {
+                        var Login = window.location.protocol + "//" + window.location.host;
+                        window.location.href = Login;
+                        alert("Tu sesión ha finalizado")
+                    } else if (xhr.status == 500) {
+                        $("#DivLoader").hide();
+                        MNotif("Ocurrió un error al hacer la petición al servidor, f:" + Id, "error")
+                    }
+                }
+            });
+        }
+    }
+
+
+    function AbrirTic() {
+        $.ajax({
+            url: '/LoginBiomedica/LoginTicket',
+            type: "POST",
+
+            success: function (data) {
+
+                if (data.res = "true") {
+
+                    window.open(data.redirect, '_blank');
+                } else {
+                    MNotif("Ocurrió un error al hacer la petición al servidor", "error")
+                }
+            }, error: function (xhr, type, error) {
+
+                MNotif("Ocurrió un error al hacer la petición al servidor, --:" + xhr, "error")
+
+            }
+        });
+
+    }
+
+
+    $('#MMenu, #AsideMenu').on('click', function () {
+      ToT();
+    });
+
+    function ToT() {
+        var Url = window.location.href;
+        var UrlP = Url.split("/");
+        var Controller = UrlP[(UrlP.length - 2)];
+
+        setTimeout(function () {
+            AjustarTablas(Controller)
+        }, 230);
+
+    }
+
+    function AjustarTablas(Controller) {
+        try {
+            //switch (Controller) {
+            //    case "P_Mantenimientos":
+                    tblDir.columns.adjust();
+            //        break;
+            //    case "Recorridos":
+            //        TblRecorridos.columns.adjust();
+            //        break;
+            //    case "P_Eventos":
+            //        TblEventos1.columns.adjust();
+            //        break;
+            //}
+        } catch (e) {
+
+
+        }
+    }
+</script>

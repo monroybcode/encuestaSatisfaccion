@@ -1,0 +1,536 @@
+﻿<style>
+
+    .file-drop-zone {
+        height: 45vh !important;
+        overflow: auto;
+    }
+
+    .kv-file-remove {
+        visibility: hidden;
+    }
+
+    .card {
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: 0;
+        border: none !important;
+    }
+</style>
+<div class="container-fluid">
+    <div class="card card-cascade narrower">
+        <div class="card-title">
+            <div class="row">
+                <div class="col-12" style="text-align:center;color:#4b4e53">
+                    <h3>
+                        <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Administración de usuarios</span>
+                          <button type="button" class="btn btn-primary" title="Nuevo" style="float:right;" id="nuevoUser"> <i class="fas fa-user fa-1x"></i>&nbsp;Agregar usuario</button>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="padding-top:10px">
+                <table id="TablaUsuarios" class="table table-striped" style="width:100%">
+                    <thead class="LTT12B">
+                        <tr>
+                            <th>Id</th>
+                            <th>Usuario</th>
+                            <th>Nombre Completo</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="LBT12">
+                        @foreach (var str2 in ViewBag.Usuarios)
+                        {
+                            <tr>
+                                <td>@str2.Id</td>
+                                <td>@str2.UserName</td>
+                                <td>@str2.NombreCompleto</td>
+                                <td>@str2.Email</td>
+                                <td>@str2.Rol</td>
+                                @if (str2.IndAct == true)
+                                {
+                                    <td><button class="btn btn-starmedica-success btn-sm" onclick="DelUser('@str2.Id')" DUsId="@str2.Id" title="Desactivar"><i class="fas fa-check-circle"></i></button></td>
+                                }
+                                else
+                                {
+                                    <td><button class="btn btn-starmedica-danger btn-sm " onclick="ActUser('@str2.Id')" title="Activar"><i class="fas fa-times-circle"></i></button></td>
+                                }
+                                <td><button class="btn btn-starmedica btn-sm" onclick="ModUser('@str2.Id')" title="Editar"><i class="fas fa-edit"></i></button>
+                                    @*<button class="btn btn-starmedica btn-sm" onclick="ResetPas('@str2.Id')" title="Cambiar contraseña"><i class="fas fa-exchange-alt"></i></button>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalUsuario" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Nuevo usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos del usuario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#cesa" role="tab" aria-controls="profile" aria-selected="false">Unidades médicas</a>
+                    </li>
+                </ul>
+                <div id="formUsuarios">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group row" style="display:none">
+                                <div class="col-4" style="text-align:left"><label class="control-label">Id</label></div>
+                                <div class="col-8">
+                                    <input type="text" readonly="readonly" class="form-control" id="Id_Usuario" style="height:24px;" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Nombre completo</label></div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="nomcom" required style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Usuario</label></div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="username" required style="height:24px;" maxlength="50" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Correo</label></div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="email" style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>
+                            @*<div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Password</label></div>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" id="Pass" style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Confirmar Password</label></div>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" id="CPass" style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>*@
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="control-label">Rol</label></div>
+                                <div class="col-8">
+                                    <select class="form-control Select2" id="Roles" style="width:100%" required>
+                                        @foreach (var str in ViewBag.Roles)
+                                        {
+                                            <option value="@str.Name">@str.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cesa">
+                            <div class="container">
+                                <div class="col-8">
+                                    <div class="form-check" id="ContenedorUMedicas">
+                                        @foreach (var str in ViewBag.UniMed)
+                                        {
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" idper="@str.Id_UnidadMedica" id="UN_@str.Id_UnidadMedica">
+                                                <label class="form-check-label" for="UN_@str.Id_UnidadMedica">@str.UnidadMedica</label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="guardarDatos()">Guardar</button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModalPass" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Actualizar Contraseña</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos del usuario</a>
+                    </li>
+                   
+                </ul>
+                <div id="formUsuarios">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group row" style="display:none">
+                                <div class="col-4" style="text-align:left"><label class="control-label">Id</label></div>
+                                <div class="col-8">
+                                    <input type="text" readonly="readonly" class="form-control" id="Id_UsuarioC" style="height:24px;" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Nombre completo</label></div>
+                                <div class="col-8">
+                                    <input type="text" readonly class="form-control" id="nomcomC" required style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Usuario</label></div>
+                                <div class="col-8">
+                                    <input type="text" readonly class="form-control" id="usernameC" required style="height:24px;" maxlength="50" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Password</label></div>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" id="PassC" style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Confirmar Password</label></div>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" id="CPassC" style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>
+                           
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="ActualizarPass()">Guardar</button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MDelLib">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><span class="AccLib"></span> usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>¿Estás seguro de <span class="AccLib2"></span> el usuario "<span id="NomUser"></span>"?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="BtnDelUser"><span class="AccLib"></span></button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var ColumnD = [{ "targets": [0],  "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "30%", "targets": [2] }, { "width": "30%", "targets": [3] },{ "width": "20%", "targets": [4] }, { "width": "10%", "targets": [5] }, { "width": "10%", "targets": [6] }]
+    var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "50vh");
+
+    TablaUsuarios
+        .columns('1')
+        .order('asc')
+        .draw();
+
+    history.pushState('', '', '/Users/Index');
+
+    //var ColumnD = [{ "targets": [0], "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "30%", "targets": [2] }, { "width": "30%", "targets": [3] }, { "width": "10%", "targets": [4] }, { "width": "10%", "targets": [5] }]
+    //var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "50vh");
+    var UsrIdC = 0;
+    var StaUsr;
+    $("#nuevoUser").click(function () {
+        //$("#ModalUsuario").data('data-title', "Modificar usuario");
+        LimpiarInputDiv("formUsuarios");
+        $("#username").prop('disabled', false);
+        $("#ModalUsuario").modal("show")
+    });
+
+    function DelUser(UsrId) {
+        UsrIdC = UsrId;
+        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrId, 0);
+        var Datos = TablaUsuarios.row(rowId).data()
+        $("#NomUser").text(Datos[1])
+        $(".AccLib").text("Desactivar")
+        $(".AccLib2").text("desactivar")
+        $("#BtnDelUser").removeClass("btn-primary").addClass("btn-danger")
+        StaUsr = false;
+        $("#MDelLib").modal("show");
+    }
+
+    function ActUser(UsrId) {
+        UsrIdC = UsrId;
+        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrId, 0);
+        var Datos = TablaUsuarios.row(rowId).data(); $("#NomUser").text(Datos[1]);
+        $(".AccLib").text("Activar"); $(".AccLib2").text("activar");
+        $("#BtnDelUser").removeClass("btn-danger").addClass("btn-primary");
+        StaUsr = true; $("#MDelLib").modal("show");
+    }
+
+    $("#BtnDelUser").click(function () {
+        var An;
+        var Datos = { "Id_Usuario": UsrIdC, "Est": StaUsr };
+        if (StaUsr == true) An = 3;
+        else An = 4;
+        AjaxGenerico(An, "AccionesUsuario", Datos)
+    })
+
+    function ObtenerCHE(DivID) {
+        var UMEdCheck = "";
+        var CR = 0;
+        var TdsInputs = $('#' + DivID).find(':input');
+
+        for (i = 0; i < TdsInputs.length; i++) {
+            var TInput = TdsInputs[i].type;
+
+            if (TInput == "checkbox") {
+                if ($(TdsInputs[i]).prop('checked')) {
+                    if (UMEdCheck)
+                        UMEdCheck += ",";
+
+                    UMEdCheck += $(TdsInputs[i]).attr("idper");
+                }
+            }
+        }
+        return UMEdCheck;
+    };
+
+    function guardarDatos() {
+        var CE = ValidaDivInputs("formUsuarios")
+
+        if ($("#Pass").val() != $("#CPass").val()) {
+            $("#Pass").focus();
+            MNotif("El password y su confirmación deben ser iguales.", "info");
+            return;
+        }
+
+        if (CE.a === 0) {
+            var datos = ObtenerCHE("ContenedorUMedicas");
+            //var datos2 = ObtenerCHE("ContenedorDir");
+            //var datos3 = ObtenerCHE("ContenedorGrupos");
+
+            var userId = $("#Id_Usuario").val() || '0';
+            var data = {
+                "Id": userId,
+                "NombreCompleto": $("#nomcom").val(),
+                "UserName": $("#username").val(),
+                "Email": $("#email").val(),
+                "RoleId": $("#Roles").val(),
+                "CeSa": datos,
+              //  "Contraseña": $("#Pass").val(),
+                //"Grupos": datos3
+            }
+
+            var EmailPac = $("#email").val();
+            if (EmailValido(EmailPac)) {
+                if (datos) {
+                    AjaxGenerico(1, "Create", data)
+                } else {
+                    if (!datos)
+                        MNotif("El usuario debe pertenecer al menos a una unidad médica", "info")
+
+                    //if (!datos2)
+                    //    MNotif("El usuario debe pertenecer al menos a una dirección", "info")
+
+                }
+            } else {
+                 MNotif("Correo electrónico inválido", "info")
+            }
+        }
+    }
+
+    function ModUser(usID) {
+        var Datos = { "Id_User": usID };
+        AjaxGenerico(2, "GetUSer", Datos)
+    }
+
+    function ActualizarPass() {
+    
+        if ($("#PassC").val() != $("#CPassC").val()) {
+            $("#PassC").focus();
+            MNotif("El password y su confirmación deben ser iguales.", "info");
+            return;
+        }
+   
+            var userId = $("#Id_UsuarioC").val() || '0';
+            var data = {
+                "Id": userId,
+                "Contraseña": $("#PassC").val(),
+            }
+
+             AjaxGenerico(5, "ResetPass", data)
+    }
+
+    function ResetPas(usID) {
+        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(usID, 0);
+        var Datos = TablaUsuarios.row(rowId).data();
+
+        $("#Id_UsuarioC").val(Datos[0]);
+        $("#nomcomC").val(Datos[2]);
+        $("#usernameC").val(Datos[1]);
+        $("#ModalPass").modal("show")
+    }
+
+    function RespuestaAjax(Id, data) {
+        try {
+            switch (Id) {
+                case 1:
+                    if (data.R == 2) {
+                        MNotif(data.msg, "alert");
+                        $("#Pass").focus();
+                    }
+                    else
+                    if (data.R == 0) {
+                        MNotif("Ya existe un registro con el nombre de usuario o email proporcionado", "alert")
+                    }
+                    else {
+                        var BtnEstatusL = "";
+                        var usir = "'" + data.Id + "'"
+                        if (data.Est == true) {
+                            BtnEstatusL = '<td><button class="btn btn-starmedica-success btn-sm"  onclick="DelUser(' + usir +')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>'
+                        }
+                        else {
+                            BtnEstatusL = '<td><button class="btn btn-starmedica-danger btn-sm" onclick="ActUser(' + usir +')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>'
+                        }
+                        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(data.Id, 0);
+                        var Datos = TablaUsuarios.row(rowId).data()
+                        var rData = [
+                            data.Id,
+                            $("#username").val(),
+                            $("#nomcom").val(),
+                            $("#email").val(),
+                            $("#Roles option:selected").text(),
+                            BtnEstatusL,
+                            '<button class="btn btn-starmedica btn-sm " onclick="ModUser(' + usir + ')"  title="Editar"><i class="fas fa-edit"></i></button>'
+                        ];
+                        UpdateTableRow(rData, data.Id, TablaUsuarios, "TablaUsuarios")
+                        $("#ModalUsuario").modal("hide")
+                        MNotif("Datos guardados", "success")
+                        LimpiarInputDiv("formUsuarios");
+                    }
+                    break;
+                case 2:
+                    $("#ModalUsuario").data('data-title', "Modificar usuario");
+                    LimpiarInputDiv("formUsuarios");
+                    var Datos = data["User"]
+                    var DatosM = data["Umed"]
+                    AsignarDIC("ContenedorUMedicas", DatosM);
+                    //AsignarDIC("ContenedorDir", data["dir"]);
+                    //AsignarDIC("ContenedorGrupos", data["gr"]);
+                    $("#username").prop('disabled', true);
+                    $("#Pass").prop('disabled', true);
+                    $("#CPass").prop('disabled', true);
+                    AsignarDatosI(Datos);
+                    $("#ModalUsuario").modal("show")
+                    break;
+                case 3:
+                    if (data.R == 0) {
+                        MNotif("Ocurrio un error al desactivar el usuario", "alert")
+                    }
+                    else {
+                        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrIdC, 0);
+                        var Datos = TablaUsuarios.row(rowId).data()
+                        var usir = "'" + UsrIdC + "'";
+                        var rData = [
+                            UsrIdC,
+                            Datos[1],
+                            Datos[2],
+                            Datos[3],
+                            Datos[4],
+                            '<td><button class="btn btn-starmedica-success btn-sm"  onclick="DelUser(' + usir +')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>',
+                            '<button class="btn btn-starmedica btn-sm "  onclick="ModUser(' + usir +')"  title="Editar"><i class="fas fa-edit"></i></button>'
+                        ];
+                        UpdateTableRow(rData, UsrIdC, TablaUsuarios, "TablaUsuarios")
+                        $("#MDelLib").modal("hide")
+                        MNotif("Datos guardados", "success")
+                        LimpiarInputDiv("formUsuarios");
+                    }
+                    break;
+                case 4:
+
+                    if (data.R > 0) {
+                        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrIdC, 0);
+                        var Datos = TablaUsuarios.row(rowId).data()
+                        var usir = "'" + UsrIdC + "'";
+                        var rData = [
+                            UsrIdC,
+                            Datos[1],
+                            Datos[2],
+                            Datos[3],
+                             Datos[4],
+                            '<td><button class="btn btn-starmedica-danger btn-sm"  onclick="ActUser(' + usir +')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>',
+                            '<button class="btn btn-starmedica btn-sm "  onclick="ModUser(' + usir +')"  title="Editar"><i class="fas fa-edit"></i></button>'
+                        ];
+                        UpdateTableRow(rData, UsrIdC, TablaUsuarios, "TablaUsuarios")
+                        $("#MDelLib").modal("hide");
+                        MNotif("Datos guardados", "success")
+                        LimpiarInputDiv("formUsuarios");
+                    } else {
+                        MNotif("Ocurrió un error al desactivar el usuario, f:" + Id, "error")
+                    }
+                    break;
+                case 5:
+                    if (data.R == 1) {
+                        MNotif("Contraseña actualisada correctamente", "info");
+                        $("#ModalPass").modal("hide");
+                    } else {
+                        MNotif(data.msg, "warning");
+                    }
+                    break;
+                default:
+            }
+            $("#DivLoader").hide();
+        } catch (err) {
+            $("#DivLoader").hide();
+            MNotif("Ocurrió un error al recibir la respuesta del servidor, f:" + Id, "error")
+        }
+    }
+
+
+    $("#email").blur(function () {
+        if (!EmailValido($(this).val())) {
+            MNotif("Correo electrónico inválido", "info")
+        }
+    })
+
+    function AsignarDIC(DivId, DatosM) {
+        var panel = $("#" + DivId);
+        var inputs = panel.find("input");
+        for (var i = 0; i < DatosM.length; i++) {
+            var uni = DatosM[i]
+            for (var x = 0; x < inputs.length; x++) {
+                var inp = $(inputs[x]).attr("idper")
+                if (inp == uni) {
+                    $(inputs[x]).prop('checked', true);
+                }
+            }
+        }
+    }
+</script>

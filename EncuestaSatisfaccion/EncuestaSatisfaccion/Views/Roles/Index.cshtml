@@ -1,0 +1,411 @@
+﻿<style>
+
+    .file-drop-zone {
+        height: 45vh !important;
+        overflow: auto;
+    }
+
+    .kv-file-remove {
+        visibility: hidden;
+    }
+
+    .card {
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: 0;
+        border: none !important;
+    }
+</style>
+<div class="container-fluid">
+    <div class="card card-cascade narrower">
+        <div class="card-title" style="padding-right:10px;">
+            <div class="row">
+                <div class="col-12" style="text-align:center;color:#4b4e53">
+                    <h3>
+                        <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Administración de roles </span>
+                        <button type="button" class="btn btn-primary" title="Nuevo" style="float:right;" id="nuevoRol"> <i class="fas fa-user fa-1x"></i>&nbsp;&nbsp;Agregar rol</button>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="padding-top:10px">
+                <table id="TablaRoles" class="table table-striped" style="width:100%">
+                    <thead class="LTT12B">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre del Rol</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="LBT12">
+                        @foreach (var str2 in ViewBag.Roles)
+                        {
+
+                            <tr>
+                                <td>@str2.Id</td>
+                                <td>@str2.Name</td>
+                                @if (str2.Ind_Activo == true)
+                                {
+                                    <td><button class="btn btn-starmedica-success btn-sm" onclick="DelRol('@str2.Id')" title="Desactivar"><i class="fas fa-check-circle"></i></button></td>
+                                }
+                                else
+                                {
+                                    <td><button class="btn btn-starmedica-danger btn-sm" onclick="ActRol('@str2.Id')" title="Activar"><i class="fas fa-times-circle"></i></button></td>
+                                }
+                                <td><button class="btn btn-starmedica btn-sm" onclick="ModRol('@str2.Id')" title="Editar"><i class="fas fa-edit"></i></button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalUsuario" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Rol</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos del rol</a>
+                    </li>
+                    @*@if (Session["ConfigFunct"].ToString() == "1")
+                        {*@
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#functions" role="tab" aria-controls="profile" aria-selected="false">Permisos</a>
+                    </li>
+                    @*}*@
+                </ul>
+                <div id="formRoles">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group row" style="display:none">
+                                <div class="col-4" style="text-align:left"><label class="control-label">Id</label></div>
+                                <div class="col-8">
+                                    <input type="text" readonly="readonly" class="form-control" id="Id" style="height:24px;" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Nombre del rol</label></div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="Name" style="height:24px;" maxlength="50" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="functions" role="tabpanel" aria-labelledby="profile-tab">
+                          
+
+                                <div class="card" style="border: 1px solid grey !important">
+                                    <div class="card-header">
+                                        <label>Funciones</label>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-check" id="ContenedorFN" style="overflow:auto; height: 100%">
+                                            @foreach (var str in ViewBag.Funciones)
+                                            {
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="@str.Id_Funcion">
+                                                    <label class="form-check-label" for="@str.Id_Funcion">@str.Nombre</label>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-bottom:0;">
+                    <button type="button" class="btn btn-primary" id="GRoles" onclick="GuardarRoles()">Guardar</button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MDelLib">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><span class="AccLib"></span> rol</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>¿Estás seguro de <span class="AccLib2"></span> el rol "<span id="NomUser"></span>"?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="BtnDelRol"><span class="AccLib"></span></button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var ColumnD = [{ "targets": [0], "visible": false, "searchable": false }, { "width": "60%", "targets": [1] }, { "width": "20%", "targets": [2] }, { "width": "20%", "targets": [3] }]
+    var TablaRoles = DatatableInitialize("#TablaRoles", ColumnD, "50vh");
+
+    TablaRoles
+        .columns('1')
+        .order('asc')
+        .draw();
+
+    history.pushState('', '', '/Roles/Index');
+    $("#nuevoRol").click(function () {
+        LimpiarInputDiv("formRoles");
+        $("#ModalUsuario").modal("show")
+        
+    });
+    function ObtenerRolCH() {
+        var FChId = [];
+        var DivID = "ContenedorFN";
+        var CR = 0;
+        var TdsInputs = $('#' + DivID).find(':input');
+
+        for (i = 0; i < TdsInputs.length; i++) {
+            var TInput = TdsInputs[i].type;
+
+            if (TInput == "checkbox") {
+                if ($(TdsInputs[i]).prop('checked')) {
+                    FChId.push($(TdsInputs[i]).attr("id"));
+                }
+            }
+        }
+        return FChId
+    };
+
+    function ObtenerTiCH() {
+        var FChId = [];
+        var DivID = "ContenedorTi";
+        var CR = 0;
+        var TdsInputs = $('#' + DivID).find(':input');
+
+        for (i = 0; i < TdsInputs.length; i++) {
+            var TInput = TdsInputs[i].type;
+            if (TInput == "checkbox") {
+                if ($(TdsInputs[i]).prop('checked')) {
+                    FChId.push($(TdsInputs[i]).attr("idx"));
+                }
+            }
+        }
+        return FChId
+    };
+
+    function ModRol(RolId) {
+        ObtenerRolInfo(RolId)
+    };
+
+    function ObtenerRolInfo(Id) {
+        LimpiarInputDiv('ContenedorFN')
+        var data = { Rid: Id };
+        AjaxGenerico(2, '/Roles/ObtenerInfoRol', data);
+    };
+
+    function GuardarRoles() {
+        var CE = ValidaDivInputs("formRoles")
+        if (CE.a == 0) {
+            $("#GRoles").prop('disabled', true);
+            $("#GRoles").text("Guardando..");
+            if (!$("#Id").val())
+                $("#Id").val("")
+            var FSel = ObtenerRolCH();
+            
+            if (FSel.length > 0) {
+                var data = { "RId": $("#Id").val(), "RN": $("#Name").val(), "Func": FSel};
+                AjaxGenerico(1, '/Roles/GRolD', data);
+            } else {
+                if (FSel.length == 0) {
+                     MNotif("El rol debe tener al menos una función asignada", "info")
+                }
+                 $("#GRoles").prop('disabled', false);
+                 $("#GRoles").text("Guardar");
+            }
+
+        }
+    }
+
+    function RespuestaAjax(Id, data) {
+        try {
+            switch (Id) {
+                case 1:
+                    var Resp = data["Resp"]
+                    if (Resp == 1) {
+                        var Rid = data["RolId"]
+                        $("#Id").val(Rid);
+                        var BtnEstatusL = "";
+                        var EST = JSON.parse(data["Est"])
+                        var value = EST[0].Ind_Activo;
+                        var crid = "'" + Rid + "'";
+                        if (value == true) {
+                            BtnEstatusL = '<td><button class="btn btn-starmedica-success btn-sm"  onclick="DelRol(' + crid+')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>'
+                            }
+                            else {
+                            BtnEstatusL = '<td><button class="btn btn-starmedica-danger btn-sm" onclick="ActRol(' + crid +')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>'
+                            }
+                        //var Rid = data["RolId"]
+                        //$("#Id").val(Rid);
+                        MNotif("Cambios guardados", "success")
+                        $("#GRoles").prop('disabled', false);
+                        $("#GRoles").text("Guardar");
+                        var rData = [
+                            Rid,
+                            $("#Name").val(),
+                            BtnEstatusL,
+                            '<button class="btn btn-starmedica btn-sm" onclick="ModRol(' + crid+')" title="Editar"><i class="fas fa-edit"></i></button>'
+                        ];
+                        UpdateTableRow(rData, Rid, TablaRoles, "TablaRoles")
+                        $("#ModalUsuario").modal("hide")
+                    } else if (Resp == 2) {
+                        MNotif("El nombre del rol ya existe", "info")
+                        $("#GRoles").prop('disabled', false);
+                        $("#GRoles").text("Guardar");
+                    } else {
+                        MNotif("Ocurrió un error al insertar el rol", "error")
+                        $("#GRoles").prop('disabled', false);
+                        $("#GRoles").text("Guardar");
+                    }
+                    break;
+                case 2:
+                    LimpiarInputDiv("formRoles");
+
+                    var FxR = data["FxR"]
+                    console.log(FxR);
+                    var panel = $("#ContenedorFN");
+                    var inputs = panel.find("input");
+                    for (var i = 0; i < FxR.length; i++) {
+                        var uni = FxR[i]
+                        for (var x = 0; x < inputs.length; x++) {
+                            var inp = $(inputs[x]).attr("id")
+                            if (inp == uni) {
+                                $(inputs[x]).prop('checked', true);
+                            }
+                        }
+                    }
+
+
+                    /*var Tipos = data["Tiposr"]
+                    var panel = $("#ContenedorTi");
+                    var inputs = panel.find("input");
+                    for (var i = 0; i < Tipos.length; i++) {
+                        var uni = Tipos[i]
+                        for (var x = 0; x < inputs.length; x++) {
+                            var inp = $(inputs[x]).attr("id")
+                            if (inp == "ti_"+uni) {
+                                $(inputs[x]).prop('checked', true);
+                            }
+                        }
+                    }*/
+
+                    AsignarDatosI(data["Roles"])
+                    $("#ModalUsuario").modal("show")
+                    break;
+                case 3:
+                    if (data.R == 0) {
+                        MNotif("Ocurrio un error al desactivar el rol", "alert")
+                    }
+                    else {
+                        var crid = "'"+ DLibId+ "'";
+                        var rowId = $('#TablaRoles').dataTable().fnFindCellRowIndexes(DLibId, 0);
+                        var Datos = TablaRoles.row(rowId).data()
+                        var rData = [
+                            DLibId,
+                            Datos[1],
+                            //$("#nomcom").val(),
+                            //$("#email").val(),
+                            '<td><button class="btn btn-starmedica-success btn-sm" onclick="DelRol(' + crid +')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>',
+                            '<button class="btn btn-starmedica btn-sm" onclick="ModRol(' + crid +')" title="Editar"><i class="fas fa-edit"></i></button>'
+                        ];
+                        UpdateTableRow(rData, DLibId, TablaRoles, "TablaRoles")
+                        $("#MDelLib").modal("hide")
+                        MNotif("Datos guardados", "success")
+                        LimpiarInputDiv("formRoles");
+                    }
+                    break;
+                case 4:
+
+                    if (data.R > 0) {
+                        var crid = "'" + DLibId + "'";
+                        var rowId = $('#TablaRoles').dataTable().fnFindCellRowIndexes(DLibId, 0);
+                        var Datos = TablaRoles.row(rowId).data()
+                        var rData = [
+                            DLibId,
+                            Datos[1],
+                            '<td><button class="btn btn-starmedica-danger btn-sm " onclick="ActRol(' + crid +')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>',
+                            '<button class="btn btn-starmedica btn-sm" onclick="ModRol(' + crid +')" title="Editar"><i class="fas fa-edit"></i></button>'
+                        ];
+                        UpdateTableRow(rData, DLibId, TablaRoles, "TablaRoles")
+                        $("#MDelLib").modal("hide");
+                        MNotif("Datos guardados", "success")
+                        LimpiarInputDiv("formRoles");
+                    } else {
+                        MNotif("Ocurrió un error al desactivar el rol, f:" + Id, "error")
+                    }
+                    break;
+                default:
+                //code block
+            }
+
+            $("#DivLoader").hide();
+        } catch (err) {
+            $("#DivLoader").hide();
+            MNotif("Ocurrió un error al recibir la respuesta del servidor, f:" + Id, "error")
+        }
+    }
+
+
+
+
+    function DelRol(DUsId) {
+        DLibId = DUsId;
+        var rowId = $('#TablaRoles').dataTable().fnFindCellRowIndexes(DLibId, 0);
+        var Datos = TablaRoles.row(rowId).data()
+        $("#NomUser").text(Datos[1])
+        $(".AccLib").text("Desactivar")
+        $(".AccLib2").text("desactivar")
+        $("#BtnDelLib").removeClass("btn-primary").addClass("btn-danger")
+        StaLib = false;
+        $("#MDelLib").modal("show");
+    }
+
+    function ActRol(AUsbId) {
+        DLibId = AUsbId;
+        var rowId = $('#TablaRoles').dataTable().fnFindCellRowIndexes(DLibId, 0);
+        var Datos = TablaRoles.row(rowId).data()
+        $("#NomUser").text(Datos[1])
+        $(".AccLib").text("Activar")
+        $(".AccLib2").text("activar")
+        $("#BtnDelLib").removeClass("btn-danger").addClass("btn-primary")
+        StaLib = true;
+        $("#MDelLib").modal("show");
+    }
+
+    $("#BtnDelRol").click(function () {
+        var An;
+        var Datos = { "Id_Rol": DLibId, "Est": StaLib };
+        if (StaLib == true)
+            An = 3;
+        else
+            An = 4;
+        AjaxGenerico(An, "/Roles/AccionesRol", Datos)
+
+    })
+
+    $("#MMenu").mouseup(function () {
+        TableAdjust(TablaRoles);
+    });
+    $(window).resize(function () {
+        TableAdjust(TablaRoles);
+    });
+
+</script>

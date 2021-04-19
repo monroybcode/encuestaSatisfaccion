@@ -1,0 +1,339 @@
+﻿<style>
+
+    .file-drop-zone {
+        height: 45vh !important;
+        overflow: auto;
+    }
+
+    .kv-file-remove {
+        visibility: hidden;
+    }
+
+    .card {
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: 0;
+        border: none !important;
+    }
+</style>
+<div class="container-fluid">
+    <div class="card card-cascade narrower">
+        <div class="card-title">
+            <div class="row">
+                <div class="col-12" style="text-align:center;color:#4b4e53">
+                    <h3>
+                        <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Reprote Respuestas</span>
+                          </h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label class="form-control-label">
+                    Nombre
+                </label>
+                <input type="text" class="form-control" title="Nombre" id="Fnombre" />
+            </div>
+
+            <div class="col-4">
+                <label class="form-control-label">
+                    Puesto
+                </label>
+                <input type="text" class="form-control" title="puesto" id="Fpuesto" />
+            </div>
+            @*<div class="col-2">
+                <label class="form-control-label">
+                    Encuesta respondida
+                </label>
+                <select id="Fcontestado" style="width:100%;    height: 28px;" class="form-control">
+                    <option value="0">Todas...</option>
+                    <option value="1">Si</option>
+                    <option value="2">No</option>
+                </select>
+            </div>*@
+        </div>
+            <div class="row" style="margin-top:10px">
+                <div class="col-2">
+                    <label class="form-control-label">
+                        Fecha Alta Inicial
+                    </label>
+                    <input type="date" class="form-control" id="Ffalta" />
+                </div>
+                <div class="col-2">
+                    <label class="form-control-label">
+                        Fecha Alta Final
+                    </label>
+                    <input type="date" class="form-control" id="Ffaltaf" />
+                </div>
+                <div class="col-2">
+                    <label class="form-control-label">
+                        Fecha Contestado Inicial
+                    </label>
+                    <input type="date" class="form-control" id="Ffcontestado" />
+                </div>
+                <div class="col-2">
+                    <label class="form-control-label">
+                        Fecha Contestado Final
+                    </label>
+                    <input type="date" class="form-control" id="Ffcontestadof" />
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="gdata();"> <span><i class="nav-icon fas fa-search"></i> Buscar</span></button>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="reprrEx()" tabindex="0" aria-controls="" type="button" title="Exportar a excel"><span><i class="nav-icon fas fa-file-excel"></i> Excel</span></button>
+
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px;">
+                <div class="col-12" style="padding-top:10px">
+                    <table id="TablaRespuestas" class="table table-striped" style="width:100%">
+                        <thead class="LTT12B">
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre Encuestado</th>
+                                <th>Contestado</th>
+                                <th>Puesto</th>
+                                <th>Fecha alta</th>
+                                <th>Fecha contestado</th>
+                                <th>Estatus del candidato</th>
+                                <th> Reclutador o primer contacto</th>
+                                <th> ¿Cómo te enteraste de la vacante?</th>
+                                <th>Cuando leíste la descripción del trabajo, ¿era clara y comprensible?</th>
+                                <th> Después de que te postulaste o enviaste tu información, ¿Cuánto tiempo tardamos en contactarte?</th>
+                                <th>¿El reclutador se comportó amable durante la entrevista?</th>
+                                <th>¿El reclutador explicó claramente los detalles del puesto?</th>
+                                <th>¿Te sentiste cómodo durante la entrevista?</th>
+                                <th> Después de la entrevista, ¿se te informó cuáles serían los siguientes pasos del proceso?</th>
+                                <th> En caso de haber acudido a una entrevista presencial, ¿se te informó oportunamente con quién debías presentarte?</th>
+                                <th>En tu visita a hospital, ¿alguna persona te recibió para pasarte a entrevista?</th>
+                                <th>¿El entrevistador aclaró tus dudas y complementó la información de la vacante?</th>
+                                <th> ¿El entrevistador fue amable contigo?</th>
+                                <th> Para tu entrevista presencial, ¿tuviste que viajar a alguno de nuestros hospitales y/o Oficinas Corporativas?</th>
+                                <th> En caso de haber viajado a alguna otra sede, ¿se te ofreció el pago de tus viáticos?</th>
+                                <th>¿El reclutador dio seguimiento puntual a tu proceso durante todas las etapas?</th>
+                                <th>En general, ¿Qué tan satisfecho estás con el proceso de reclutamiento?</th>
+                                <th>En función de tu experiencia, ¿recomendarías a Star Médica como lugar para trabajar, a un colega o conocido?</th>
+                                <th>¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="LBT12">
+                            @foreach (var str2 in ViewBag.Respuestas)
+                            {
+                                <tr>
+                                    <td>@str2.id</td>
+                                    <td>@str2.nombre  </td>
+                                    <td>@str2.contestado  </td>
+                                    <td>@str2.puesto  </td>
+                                    <td>@str2.fechaAlta  </td>
+                                    <td>@str2.fechaContestado  </td>
+
+                                    <td>@str2.rp1</td>
+                                    <td>@str2.rp2</td>
+                                    <td>@str2.rp3</td>
+                                    <td>@str2.rp4</td>
+                                    <td>@str2.rp5</td>
+                                    <td>@str2.rp6</td>
+                                    <td>@str2.rp7</td>
+                                    <td>@str2.rp8</td>
+                                    <td>@str2.rp9</td>
+                                    <td>@str2.rp10</td>
+                                    <td>@str2.rp11</td>
+                                    <td>@str2.rp12</td>
+                                    <td>@str2.rp13</td>
+                                    <td>@str2.rp14</td>
+                                    <td>@str2.rp15</td>
+                                    <td>@str2.rp16</td>
+                                    <td>@str2.rp17</td>
+                                    <td>@str2.rp18</td>
+                                    <td>@str2.rp19</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<script>
+
+    var ColumnD = [{ "targets": [0],  "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "30%", "targets": [2] }, { "width": "30%", "targets": [3] },{ "width": "20%", "targets": [4] }, { "width": "10%", "targets": [5] }, { "width": "10%", "targets": [6] }]
+    var TablaRespuestas = DatatableInitialize("#TablaRespuestas", ColumnD, "50vh");
+
+    TablaRespuestas
+        .columns('1')
+        .order('asc')
+        .draw();
+
+    history.pushState('', '', '/ReporteRespuestas/Index');
+
+    function reprrEx() {
+        var n = $("#Fnombre").val();
+        var c = 0;
+        var fi = $("#Ffalta").val();
+        var ff = $("#Ffcontestado").val();
+        var fif = $("#Ffaltaf").val();
+        var fff = $("#Ffcontestadof").val();
+        var p = $("#Fpuesto").val();
+        if (fif < fi) {
+            MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+            return;
+        }
+        if (fff < ff) {
+            MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+            return;
+        }
+
+        var data = {
+            "n": n,
+            "c": c,
+            "fi": fi,
+            "ff": ff,
+            "fif": fi,
+            "fff": ff,
+            "p": p,
+        }
+        AjaxGenerico(2, 'generaXcel', data);
+    }
+    function gdata() {
+
+        var n = $("#Fnombre").val();
+        var c = 0;
+        var fi = $("#Ffalta").val();
+        var ff = $("#Ffcontestado").val();
+        var fif = $("#Ffaltaf").val();
+        var fff = $("#Ffcontestadof").val();
+        var p = $("#Fpuesto").val();
+        if (fif < fi) {
+            MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+            return;
+        }
+        if (fff < ff) {
+            MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+            return;
+        }
+
+        var data = {
+            "n": n,
+            "c":c,
+            "fi": fi,
+            "ff": ff,
+            "fif": fi,
+            "fff": ff,
+            "p": p,
+        }
+          AjaxGenerico(0, 'gDta', data);
+
+    }
+
+    function RespuestaAjax(Id, data) {
+        try {
+            switch (Id) {
+                case 0:
+                    if (data.R == 1) {
+
+                        TablaRespuestas.clear().draw();
+                        if (data.listado != "") {
+                                var dta = data.listado;
+                                var rows = []
+                                for (var x = 0; x < dta.length; x++) {
+
+                                    rows.push([
+                                        
+                                        dta[x]["id"],
+                                        dta[x]["nombre"],
+                                        dta[x]["contestado"],
+                                        dta[x]["puesto"],
+                                        ConvEFDate(dta[x]["fechaAlta"], "dd/MM/yyyy HH:mm"),
+                                        ConvEFDate(dta[x]["fechaContestado"], "dd/MM/yyyy HH:mm"),
+                                        dta[x]["rp1"],
+                                        dta[x]["rp2"],
+                                        dta[x]["rp3"],
+                                        dta[x]["rp4"],
+                                        dta[x]["rp5"],
+                                        dta[x]["rp6"],
+                                        dta[x]["rp7"],
+                                        dta[x]["rp8"],
+                                        dta[x]["rp9"],
+                                        dta[x]["rp10"],
+                                        dta[x]["rp11"],
+                                        dta[x]["rp12"],
+                                        dta[x]["rp13"],
+                                        dta[x]["rp14"],
+                                        dta[x]["rp15"],
+                                        dta[x]["rp16"],
+                                        dta[x]["rp17"],
+                                        dta[x]["rp18"],
+                                        dta[x]["rp19"],
+                                    ])
+                                }
+                                TablaRespuestas.rows.add(rows).draw();
+                            }
+
+
+                    } else {
+                        MNotif("Ocurrio un problema al consultar, intente de nuevo.", "alert")
+                    }
+                    break;
+                case 1:
+                    if (data.R == 2) {
+                        MNotif(data.msg, "alert");
+                        $("#Pass").focus();
+                    }
+                    else
+                    if (data.R == 0) {
+                        MNotif("Ya existe un registro con el nombre de usuario o email proporcionado", "alert")
+                    }
+                    else {
+                        var BtnEstatusL = "";
+                        var usir = "'" + data.enc.Id + "'"
+                        if (data.enc.Contestada == 1) {
+                            BtnEstatusL = '<td><button class="btn btn-starmedica-success btn-sm"  onclick="DelUser(' + usir +')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>'
+                        }
+                        else {
+                            BtnEstatusL = '<td><button class="btn btn-starmedica-danger btn-sm" onclick="ActUser(' + usir +')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>'
+                        }
+                        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(data.enc.Id, 0);
+                        var Datos = TablaUsuarios.row(rowId).data()
+                        var rData = [
+                            data.enc.Id,
+                            $("#nombre").val() + " " + $("#apa").val() + " " + $("#ama").val(),
+                            $("#email").val(),
+                            $("#puesto").val(),
+                            ConvEFDate( data.enc.fechaAlta,"dd/MM/yyyy HH:mm:ss"),
+                            BtnEstatusL,
+                            ' <button class="btn btn-starmedica btn-sm" onclick="ModUser(' + data.enc.Id+')" title="Enviar"><i class="fas fa-envelope"></i></button>'+
+                            '  <button class="btn btn-starmedica btn-sm" onclick="ModUser(' + data.enc.Id+')" title="Revisar"><i class="fas fa-eye"></i></button>'
+                        ];
+                        UpdateTableRow(rData, data.Id, TablaUsuarios, "TablaUsuarios")
+                        $("#ModalUsuario").modal("hide")
+                        MNotif("Datos guardados", "success")
+                        LimpiarInputDiv("formUsuarios");
+                    }
+                    break;
+                case 2:
+                    if (data.R == 1) {
+                        var link = document.createElement('a');
+                        document.body.appendChild(link);
+                        link.href = data.URL;
+                        link.click();
+                    } else
+                        if (data.R == 2) { MNotif("No se encontraron registros.", "information"); }
+                    break;
+
+                default:
+            }
+            $("#DivLoader").hide();
+        } catch (err) {
+            $("#DivLoader").hide();
+            MNotif("Ocurrió un error al recibir la respuesta del servidor, f:" + Id, "error")
+        }
+    }
+
+
+
+</script>

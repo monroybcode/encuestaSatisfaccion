@@ -1,0 +1,229 @@
+﻿@{
+    Layout = "";
+}
+<style>
+    .modal-backdrop {
+        opacity: 0.5;
+    }
+
+    footer {
+        position: absolute !important;
+    }
+
+    .banner {
+        background-color: #d7d7d7;
+        height: 200px;
+        z-index: -1;
+        background-image: url(/../../Images/header_login2.png);
+        background-size: auto 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .margenLogin {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .colorBack {
+        background-color: #f5f5f5;
+    }
+
+    .login-card {
+        max-width: 400px;
+        padding-left: 2%;
+        padding-right: 2%;
+        background-color: #f3f3f3c9;
+        padding-bottom: 0;
+        margin: 0 auto !important;
+        margin-top: -42px !important;
+    }
+    /*
+        .no-margin {
+            margin: 0px !important;
+        }*/
+
+    .login-btns {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+    }
+
+    .btn-star-medica {
+        background: #98999b;
+        color: #fff;
+        font-size: 15px;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        border: 0;
+        line-height: 1.428571429;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .loading {
+        height: 70px;
+        background-image: url(/../../Images/loader.gif);
+        background-size: 50px;
+        background-position: top;
+        background-repeat: no-repeat;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .error-usuario {
+        display: none;
+        margin: 0;
+        text-align: center;
+        color: #ff4747;
+        position: absolute;
+        bottom: -10px;
+        white-space: nowrap;
+    }
+
+    #body2 {
+        display: flex;
+        /*min-height: 100vh;*/
+        flex-direction: column;
+    }
+
+    #main2 {
+        flex: 1 0 auto;
+    }
+</style>
+<link href="~/Content/style.css" rel="stylesheet">
+<link href="~/Content/Site.css" rel="stylesheet">
+
+<body style="min-height:100vh;background-color:white">
+    <div id="body2">
+        <div id="main2">
+            <nav class="nav-extended" style="background-color: #fff">
+                <div class="row" style="margin: 0;">
+                    <div class="col s4 m4 l4">
+                    </div>
+                    <div class="col s4 m4 l4 justified-center" style="text-align:center; padding:20px;">
+                        <a href="/Account/Login" style="height: 50px;"><img id="logo" src="~/Images/logo-starmedica.png" height="50" alt=""></a>
+                    </div>
+                    <div class="col s4 m4 l4">&nbsp;</div>
+                </div>
+            </nav>
+            <div style=" width:100%;">
+                <img src="~/Images/header-activos.PNG" alt="" style="max-width:100%;" />
+            </div>
+            <div class="row no-margin container-transparent" style="position:sticky">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                    <div class="text-center">
+                        <div align="center">
+                            <div class="welcome-subtitle" style="font-weight: 500; font-size:24px; font-family:HelveticaNeue35thin; padding-top:15px; color: #3a3e43 !important;line-height:34.2833px;">Encuestas RH</div>
+                            <br />
+                            <div class="welcome-message" style="color:rgb(152, 153, 154); font-family:HelveticaNeue35thin; font-size:32px;">Bienvenido</div>
+                            <div class="form-group" style="margin-top: 1rem;">
+                                <div class="col-md-12 login-btns">
+                                    <img src="~/Images/loader.gif" id="loaderSis" style="display:none; width:20%" />
+                                    <input type="button" onclick="openModal();" id="myBtn" value="Iniciar sesión" class="btn btn-star-medica" style="width:80%;" />
+                                    @*<div style="padding-top:20px;width:80%;"> <button type="submit" class="btn btn-star-medica" id="btnIniciar" onclick="entra()" style="width:100%">Iniciar sesión</button></div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="modalLogin" style="overflow:hidden; ">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="max-width: 400px !important;margin-left: 8%;  min-width: 400px !important;">
+                @*<div class="modal-header colorBack row" style="font-family: HelveticaNeue35thin;">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4" style="text-align:center"><h5 class="modal-title">INICIAR SESIÓN</h5></div>
+                    <div class="col-md-4">
+                    </div>
+                </div>*@
+                <div class="modal-body" style="text-align:center; padding:!0px;">
+                    <div class="margenLogin" id="formLogin">
+                        <img style="height: 85px;" src="~/Images/logo-login.png" />
+                        <div style="padding-top:20px;"><span>> Escribe tu nombre de usuario y contraseña.</span></div>
+                        <div style="padding-top:20px;"><input type="text" class="form-control InputLogin" placeholder="Usuario" id="userName" required /></div>
+                        <div style="padding-top:20px;"><input type="password" class="form-control InputLogin" placeholder="Contraseña" id="userPass" required /></div>
+                        <div style="padding-top:20px;"> <button type="submit" class="btn btn-star-medica" id="btnIniciar" onclick="login2()" style="width: 100%; background-color: #5cb85c !important; border-color: #4cae4c !important;">Iniciar sesión</button></div>
+
+                    </div>
+                </div>
+                @*<div class="modal-footer colorBack">
+                    <button type="button" class="btn btn-star-medica" data-dismiss="modal">Cerrar</button>
+                </div>*@
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div id="adn"></div>
+        <div class="grey-space">
+            <img src="../images/espacio-humano.png" class="slogan-space-manager" alt="">
+        </div>
+    </footer>
+
+</body>
+
+<div id="mdlLogin">
+
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.js?V=100"></script>
+<script src="@Url.Content("https://sso.starmedica.com:8083/scripts/Loginjs.js")?version=@Guid.NewGuid()"></script>
+
+<script>
+    LoginUrl = "/Account/IsN";
+    tcallAuth = 1;
+
+    var dataI = {
+        np: "",
+        ps: "",
+        nps: "",
+        npc: "",
+        rm: false,
+        us: "",
+    }
+
+    function entra() {
+        $("#modalLogin").modal("show");
+    }
+
+
+    function login2() {
+
+        dataI.np = $("#userName").val();
+        dataI.ps = $("#userPass").val();
+        $.ajax({
+            type: 'post',
+            url: "/Account/IsN2",
+            data: dataI,
+            success(data) {
+                var td = typeof data;
+                if (td == "string")
+                    data = JSON.parse(data);
+
+                if (data.auth == true) {
+                    $("#mdlSession").modal("hide");
+                    window.location.href = data.rurl;
+                } else {
+                    Loading(false)
+                    $(".error-msg").text(data.message);
+                }
+            }, error(e) {
+                $(".error-msg").text("Ocurrió un error desconocido");
+                Loading(false)
+            }
+        })
+    }
+</script>

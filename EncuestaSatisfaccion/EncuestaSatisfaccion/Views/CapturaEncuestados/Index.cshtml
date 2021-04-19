@@ -1,0 +1,363 @@
+﻿<style>
+
+    .file-drop-zone {
+        height: 45vh !important;
+        overflow: auto;
+    }
+
+    .kv-file-remove {
+        visibility: hidden;
+    }
+
+    .card {
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: 0;
+        border: none !important;
+    }
+</style>
+<div class="container-fluid">
+    <div class="card card-cascade narrower">
+        <div class="card-title">
+            <div class="row">
+                <div class="col-12" style="text-align:center;color:#4b4e53">
+                    <h3>
+                        <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Administración de encuestados</span>
+                        <button type="button" class="btn btn-primary" title="Nuevo" style="float:right;" id="nuevoUser"> <i class="fas fa-user fa-1x"></i>&nbsp;Agregar </button>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="padding-top:10px">
+                <table id="TablaUsuarios" class="table table-striped" style="width:100%">
+                    <thead class="LTT12B">
+                        <tr>
+                            <th>Id</th>
+
+                            <th>Nombre Completo</th>
+                            <th>Mail</th>
+                            <th>Puesto</th>
+                            <th>Fecha</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="LBT12">
+                        @foreach (var str2 in ViewBag.Encuestados)
+                        {
+                            <tr>
+                                <td>@str2.Id</td>
+                                <td>@str2.Nombre @str2.Apa @str2.Ama  </td>
+                                <td>@str2.mail</td>
+                                <td>@str2.puesto</td>
+                                <td>@str2.fechaAlta</td>
+                                @if (str2.Contestada == 1)
+                                {
+                                    <td><button class="btn btn-starmedica-success btn-sm"  DUsId="@str2.Id" title="Contestada"><i class="fas fa-check-circle"></i></button></td>
+                                }
+                                else
+                                {
+                                    <td><button class="btn btn-starmedica-danger btn-sm "  title="Sin Contestar"><i class="fas fa-times-circle"></i></button></td>
+                                }
+                            <td>
+                                <button class="btn btn-starmedica btn-sm" onclick="ModUser('@str2.Id')" title="Enviar"><i class="fas fa-envelope"></i></button>
+                                <button class="btn btn-starmedica btn-sm" onclick="ModUser('@str2.Id')" title="Revisar"><i class="fas fa-eye"></i></button>
+                               </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalUsuario" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Nuevo encuestado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos del usuario</a>
+                    </li>
+                   
+                </ul>
+                <div id="formUsuarios">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group row" style="display:none">
+                                <div class="col-4" style="text-align:left"><label class="control-label">Id</label></div>
+                                <div class="col-8">
+                                    <input type="text" readonly="readonly" class="form-control" id="Id_Usuario" style="height:24px;" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Nombres </label></div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="nombre" required style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Apellido Paterno</label></div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="apa" required style="height:24px;" maxlength="50" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Apellido Materno</label></div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="ama" required style="height:24px;" maxlength="50" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Correo</label></div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="email" style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Puesto</label></div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="puesto" style="height:24px;" maxlength="100" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="guardarDatos()">Guardar</button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="MDelLib">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><span class="AccLib"></span> usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>¿Estás seguro de <span class="AccLib2"></span> el usuario "<span id="NomUser"></span>"?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="BtnDelUser"><span class="AccLib"></span></button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var ColumnD = [{ "targets": [0],  "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "30%", "targets": [2] }, { "width": "30%", "targets": [3] },{ "width": "20%", "targets": [4] }, { "width": "10%", "targets": [5] }, { "width": "10%", "targets": [6] }]
+    var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "50vh");
+
+    TablaUsuarios
+        .columns('1')
+        .order('asc')
+        .draw();
+
+    history.pushState('', '', '/CapturaEncuestados/Index');
+
+    //var ColumnD = [{ "targets": [0], "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "30%", "targets": [2] }, { "width": "30%", "targets": [3] }, { "width": "10%", "targets": [4] }, { "width": "10%", "targets": [5] }]
+    //var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "50vh");
+    var UsrIdC = 0;
+    var StaUsr;
+    $("#nuevoUser").click(function () {
+        //$("#ModalUsuario").data('data-title', "Modificar usuario");
+        LimpiarInputDiv("formUsuarios");
+        $("#username").prop('disabled', false);
+        $("#ModalUsuario").modal("show")
+    });
+
+    function DelUser(UsrId) {
+        UsrIdC = UsrId;
+        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrId, 0);
+        var Datos = TablaUsuarios.row(rowId).data()
+        $("#NomUser").text(Datos[1])
+        $(".AccLib").text("Desactivar")
+        $(".AccLib2").text("desactivar")
+        $("#BtnDelUser").removeClass("btn-primary").addClass("btn-danger")
+        StaUsr = false;
+        $("#MDelLib").modal("show");
+    }
+
+    function ActUser(UsrId) {
+        UsrIdC = UsrId;
+        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrId, 0);
+        var Datos = TablaUsuarios.row(rowId).data(); $("#NomUser").text(Datos[1]);
+        $(".AccLib").text("Activar"); $(".AccLib2").text("activar");
+        $("#BtnDelUser").removeClass("btn-danger").addClass("btn-primary");
+        StaUsr = true; $("#MDelLib").modal("show");
+    }
+
+    $("#BtnDelUser").click(function () {
+        var An;
+        var Datos = { "Id_Usuario": UsrIdC, "Est": StaUsr };
+        if (StaUsr == true) An = 3;
+        else An = 4;
+        AjaxGenerico(An, "AccionesUsuario", Datos)
+    })
+
+    function ObtenerCHE(DivID) {
+        var UMEdCheck = "";
+        var CR = 0;
+        var TdsInputs = $('#' + DivID).find(':input');
+
+        for (i = 0; i < TdsInputs.length; i++) {
+            var TInput = TdsInputs[i].type;
+
+            if (TInput == "checkbox") {
+                if ($(TdsInputs[i]).prop('checked')) {
+                    if (UMEdCheck)
+                        UMEdCheck += ",";
+
+                    UMEdCheck += $(TdsInputs[i]).attr("idper");
+                }
+            }
+        }
+        return UMEdCheck;
+    };
+
+    function guardarDatos() {
+        var CE = ValidaDivInputs("formUsuarios")
+
+
+        if (CE.a === 0) {
+
+            var userId = $("#Id_Usuario").val() || '0';
+            var data = {
+                "Id": userId,
+                "nombre": $("#nombre").val(),
+                "apa": $("#apa").val(),
+                "ama": $("#ama").val(),
+                "Email": $("#email").val(),
+                "puesto": $("#puesto").val(),
+
+            }
+
+            var EmailPac = $("#email").val();
+            if (EmailValido(EmailPac)) {
+                    AjaxGenerico(1, "Create", data)
+            }
+            } else {
+                 MNotif("Correo electrónico inválido", "info")
+            }
+        }
+
+
+    function ModUser(usID) {
+        var Datos = { "Id_User": usID };
+        AjaxGenerico(2, "GetUSer", Datos)
+    }
+
+
+    function RespuestaAjax(Id, data) {
+        try {
+            switch (Id) {
+                case 1:
+                    if (data.R == 2) {
+                        MNotif(data.msg, "alert");
+                        $("#Pass").focus();
+                    }
+                    else
+                    if (data.R == 0) {
+                        MNotif("Ya existe un registro con el nombre de usuario o email proporcionado", "alert")
+                    }
+                    else {
+                        var BtnEstatusL = "";
+                        var usir = "'" + data.enc.Id + "'"
+                        if (data.enc.Contestada == 1) {
+                            BtnEstatusL = '<td><button class="btn btn-starmedica-success btn-sm"  onclick="DelUser(' + usir +')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>'
+                        }
+                        else {
+                            BtnEstatusL = '<td><button class="btn btn-starmedica-danger btn-sm" onclick="ActUser(' + usir +')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>'
+                        }
+                        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(data.enc.Id, 0);
+                        var Datos = TablaUsuarios.row(rowId).data()
+                        var rData = [
+                            data.enc.Id,
+                            $("#nombre").val() + " " + $("#apa").val() + " " + $("#ama").val(),
+                            $("#email").val(),
+                            $("#puesto").val(),
+                            ConvEFDate( data.enc.fechaAlta,"dd/MM/yyyy HH:mm:ss"),
+                            BtnEstatusL,
+                            ' <button class="btn btn-starmedica btn-sm" onclick="ModUser(' + data.enc.Id+')" title="Enviar"><i class="fas fa-envelope"></i></button>'+
+                            '  <button class="btn btn-starmedica btn-sm" onclick="ModUser(' + data.enc.Id+')" title="Revisar"><i class="fas fa-eye"></i></button>'
+                        ];
+                        UpdateTableRow(rData, data.Id, TablaUsuarios, "TablaUsuarios")
+                        $("#ModalUsuario").modal("hide")
+                        MNotif("Datos guardados", "success")
+                        LimpiarInputDiv("formUsuarios");
+                    }
+                    break;
+                case 2:
+                    $("#ModalUsuario").data('data-title', "Modificar usuario");
+                    LimpiarInputDiv("formUsuarios");
+                    var Datos = data["User"]
+                    var DatosM = data["Umed"]
+                    AsignarDIC("ContenedorUMedicas", DatosM);
+                    //AsignarDIC("ContenedorDir", data["dir"]);
+                    //AsignarDIC("ContenedorGrupos", data["gr"]);
+                    $("#username").prop('disabled', true);
+                    $("#Pass").prop('disabled', true);
+                    $("#CPass").prop('disabled', true);
+                    AsignarDatosI(Datos);
+                    $("#ModalUsuario").modal("show")
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+
+                    break;
+                case 5:
+
+                    break;
+                default:
+            }
+            $("#DivLoader").hide();
+        } catch (err) {
+            $("#DivLoader").hide();
+            MNotif("Ocurrió un error al recibir la respuesta del servidor, f:" + Id, "error")
+        }
+    }
+
+
+    $("#email").blur(function () {
+        if (!EmailValido($(this).val())) {
+            MNotif("Correo electrónico inválido", "info")
+        }
+    })
+
+    function AsignarDIC(DivId, DatosM) {
+        var panel = $("#" + DivId);
+        var inputs = panel.find("input");
+        for (var i = 0; i < DatosM.length; i++) {
+            var uni = DatosM[i]
+            for (var x = 0; x < inputs.length; x++) {
+                var inp = $(inputs[x]).attr("idper")
+                if (inp == uni) {
+                    $(inputs[x]).prop('checked', true);
+                }
+            }
+        }
+    }
+</script>

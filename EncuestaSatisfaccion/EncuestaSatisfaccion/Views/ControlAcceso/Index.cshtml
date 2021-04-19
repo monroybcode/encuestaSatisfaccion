@@ -1,0 +1,57 @@
+﻿<head>
+   
+</head>
+
+<body>
+    <div class="col-12" style="background-color:grey;color:white; padding-left:45%;top:10px;margin-bottom:30px;"><h3 style="color:white !important;">Encuestas RH</h3></div>
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-10"></div>
+        <div class="col-2"> <button class="btn btn-success btn-sm" onclick="Entrada()" title="Salida">Entrada <i class="fas fa-door-open"></i></button></div>
+    </div>
+    <table class="table table-hover table-striped" id="CATable" style="max-height:307px">
+        <thead class="LTT12B">
+            <tr>
+                <th>id</th>
+                
+                <th>No.</th>
+                <th>Nombre</th>
+                <th>A. Paterno</th>
+                <th>A. Materno</th>
+                <th>Identificación</th>
+                <th>F. Identificación</th>
+                <th>H.Entrada</th>
+                <th>H.Salida</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="LBT12"></tbody>
+    </table>
+
+    <script>
+
+        var ColBitacora = [{ "targets": [0], "visible": false, "searchable": true, }, { "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9], "searchable": true, "width": "20%" }];
+
+        var CATable = DatatableInitialize("#CATable", ColBitacora, "50vh");
+
+
+        CATable.clear().draw();
+        var Rows = [];
+
+        Rows.push(["1", "1", "Ignacio", "Castañeda", "Lopez", "INE", "12345456456", "08:00", "13:00", '<button class="btn btn-success btn-sm"  onclick="Salida()"  title="Salida"><i class="fas fa-sign-out-alt"></i></button>']);
+        Rows.push(["1", "2", "Marta", "Perez", "Perez", "INE", "45345345345", "09:00", "", '']);
+        Rows.push(["1", "3", "Pedro", "Moreno", "Lopez", "Licencia", "dfsd333", "10:00", "14:00", '<button class="btn btn-success btn-sm"  onclick="Salida()"  title="Salida"><i class="fas fa-sign-out-alt"></i></button>']);
+        Rows.push(["1", "4", "Marta", "Carlos", "Martinez", "Castro", "45345345345", "13:00", "", '']);
+        Rows.push(["1", "4", "Hector", "Soto", "Gutierrez", "Castro", "45345345345", "13:15", "", '']);
+
+
+        CATable.rows.add(Rows).draw();
+        setTimeout(function () {
+            CATable.columns.adjust().draw();
+        },
+            1000
+        )
+
+
+
+    </script>
+</body>

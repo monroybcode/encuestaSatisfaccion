@@ -1,0 +1,662 @@
+﻿
+
+<!DOCTYPE html>
+
+<style>
+    .freebirdHeaderCard.freebirdViewerHeaderCard {
+        max-height: 22.51400124455507vw;
+        max-width: 90vw;
+        height: 160.09956440572495px;
+        width: 640px;
+    }
+    .freebirdHeaderCard {
+        background-color:white;
+        margin:15px;
+        background-image: url(https://lh6.googleusercontent.com/SysF_nlZoC10qy2N1JyhkxNXCfwP6P9jCIfvpFCy_VG_1HEPb5b6nWhBYM4YrH3pZv3dGeUGCN-h3shNqcVl8lHAaMDyAKzks8_q3rkqYlG2FHgICet9QuO_QyK3mFoaQw=w1607);
+        background-size: contain;
+        background-position: center;
+    }
+    .freebirdFormviewerViewHeaderCard {
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        margin-top: 12px;
+    }
+    .freebirdFormviewerViewCenteredContent {
+        margin: auto;
+        max-width: 90vw;
+        width: 640px;
+    }
+    .m2 .freebirdFormviewerViewFormContent {
+        color: #202124;
+        padding: 0;
+    }
+        .m2 .freebirdFormviewerViewFormContent > div, .freebirdFormviewerViewFormContent > .freebirdFormviewerViewNoPadding {
+            padding: 0;
+        }
+    .divGenerico {
+        border-radius: 8px;
+        background-color: white;
+        padding: 20px;
+        margin-top: 20px;
+        text-align: justify;
+        font-family: HelveticaNeueRoman !important;
+        letter-spacing: .5px;
+        color: #98999a;
+        font-size: 15px;
+    }
+    .pregunta {
+        font-size: 14px;
+        margin-bottom: 15px;
+        border: solid 1px black;
+        border-radius: 8px;
+        padding: 10px;
+    }
+    .respuestas {
+        margin-top: 5px;
+    }
+    .radio{
+        margin:5px;
+    }
+    .tituloP {
+        font-family: HelveticaNeue !important;
+        background-color: grey;
+        color: white;
+        text-align: center;
+        padding: 4px;
+        border-radius: 8px;
+        margin-bottom: 7px
+    }
+    .textA {
+        width: 100%;
+        border-style: none;
+        border-color: Transparent;
+        border-bottom: solid 1px black;
+    }
+    textarea:focus {
+        width: 100%;
+        border-style: none;
+        border-color: Transparent;
+        border-bottom: solid 1px black;
+    }
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Encuesta</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/Scripts")
+    <script src="~/Scripts/FunctionsJS.js?1.12"></script>
+</head>
+<body style="        background-color: #ede7f6;">
+    <div class="freebirdFormviewerViewHeaderCard freebirdFormviewerViewCenteredContent freebirdViewerHeaderCard freebirdHeaderCard">
+    </div>
+    @if (ViewBag.mail == "")
+    {
+        <div class="freebirdFormviewerViewCenteredContent">
+            <div class="divGenerico">
+                <h3 style="text-align:center;">Encuestador no registrado</h3>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        if (ViewBag.Vencida == 1)
+        {
+            <div class="divGenerico">
+                <h3 style="text-align:center;">La vigencia de esta encuesta ha caducado</h3>
+
+            </div>
+        }
+        else
+        {
+            <input type="hidden" id="mail" value="@ViewBag.mail" />
+            <div id="Gracias" style="display:none">
+                <div class="freebirdFormviewerViewCenteredContent">
+                    <div class="divGenerico">
+                        <h3 style="text-align:center;">Gracias por su tiempo</h3>
+                    </div>
+                </div>
+            </div>
+            <div id="Enc">
+                <div class="freebirdFormviewerViewCenteredContent">
+                    <div class="divGenerico">
+                        <h3 style="text-align:center;">ATRACCIÓN DE TALENTO | ENCUESTA DE SATISFACCIÓN</h3>
+                        Esta encuesta tiene como objetivo principal obtener información sobre tu experiencia en el proceso de Atracción de Talento en Grupo Star Médica. Los resultados nos ayudarán a la toma de decisiones y/o acciones en beneficio de todos nuestros candidatos.
+                        <br />
+                        A continuación, encontrarás una serie de afirmaciones y preguntas las cuales agradeceremos que respondas con la mayor sinceridad y honestidad posible, marcando la opción que mejor describa lo que sientes o piensas. No existen respuestas correctas o incorrectas.
+                        <br />
+                        <br />
+                        Esta encuesta es anónima
+                        <br />
+                        <br />
+                        En caso de dudas, puedes escribirnos a: keramirez@starmedica.com
+                        <br />
+                        <br />
+                        <div style="color:red;">*Obligatorio</div>
+                    </div>
+                    <div class="divGenerico">
+                        <div class="tituloP">Antes del proceso</div>
+                        <div class="pregunta">
+                            <label> Por favor selecciona la opción que mejor te describa <label style="color:red;">*</label></label>
+                            <div class="respuestas">
+                                Estatus del candidato:
+                                <div class="radio"> <input type="radio" id="P1-1" name="P1" value="Candidato finalista / seleccionado" />Candidato finalista / seleccionado</div>
+                                <div class="radio"> <input type="radio" id="P1-2" name="P1" value="Candidato no seleccionado" />Candidato no seleccionado</div>
+                                <div class="radio"><input type="radio" id="P1-3" name="P1" value="Declinó propuesta" />Declinó propuesta</div>
+                            </div>
+                        </div>
+
+                        <div class="pregunta">
+                            <label>
+                                Por favor selecciona el nombre de tu reclutador <label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+                                Reclutador o primer contacto:
+                                <div class="radio">
+                                    <input type="radio" id="P2" name="P2" value="Andrea Tinoco" />Andrea Tinoco
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P2" name="P2" value="Karla Ramirez" />Karla Ramirez
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P2" name="P2" value="Mario Sumano" />Mario Sumano
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P2" name="P2" value="Valeria Calderón" />Valeria Calderón
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P2" name="P2" value="Paulina Mendoza" />Paulina Mendoza
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P2" name="P2" value="Capital Humano de Hospital" />Capital Humano de Hospital
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                ¿Cómo te enteraste de la vacante?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P3" name="P3" value="Recomendación de colaborador interno" />Recomendación de colaborador interno
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P3" name="P3" value="Bolsa de trabajo" />Bolsa de trabajo
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P3" name="P3" value="OCC" />
+                                    OCC
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P3" name="P3" value="Linkedin" />Linkedin
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                Cuando leíste la descripción del trabajo, ¿era clara y comprensible?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P4" name="P4" value="Sí" />Sí
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P4" name="P4" value="No" />No
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P4" name="P4" value="Tal vez" />
+                                    Tal vez
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divGenerico">
+                        <div class="tituloP">
+                            Primer Contacto<br />
+                            <label style="font-size:12px">Primera llamada y/o entrevista con reclutador</label>
+                        </div>
+
+                        <div class="pregunta">
+                            <label>
+                                Después de que te postulaste o enviaste tu información, ¿Cuánto tiempo tardamos en contactarte?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P5" name="P5" value="1 a 3 días" />1 a 3 días
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P5" name="P5" value="4 a 10 días" />4 a 10 días
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P5" name="P5" value="más de 10 días" />más de 10 días
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                ¿El reclutador se comportó amable durante la entrevista?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    Nada amable
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P6" name="P6" value="1" />1
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P6" name="P6" value="2" />2
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P6" name="P6" value="3" />3
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P6" name="P6" value="4" />4
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P6" name="P6" value="5" />5
+                                </div>
+                                <div class="radio">
+                                    Muy amable
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                ¿El reclutador explicó claramente los detalles del puesto?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    Nada claro
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P7" name="P7" value="1" />1
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P7" name="P7" value="2" /> 2
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P7" name="P7" value="3" />3
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P7" name="P7" value="4" />4
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P7" name="P7" value="5" />5
+                                </div>
+                                <div class="radio">
+                                    Muy claro
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divGenerico">
+                        <div class="tituloP">
+                            Al terminar la entrevista<br />
+                            <label style="font-size:12px">Entrevista virtual con Jefe directo potencial y/o Director de área</label>
+                        </div>
+
+                        <div class="pregunta">
+                            <label>
+                                ¿Te sentiste cómodo durante la entrevista?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    Nada cómodo
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P8" name="P8" value="1" />1
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P8" name="P8" value="2" />2
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P8" name="P8" value="3" />3
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P8" name="P8" value="4" />4
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P8" name="P8" value="5" />5
+                                </div>
+                                <div class="radio">
+                                    Muy cómodo
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                Después de la entrevista, ¿se te informó cuáles serían los siguientes pasos del proceso?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P9" name="P9" value="Sí" />Sí
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P9" name="P9" value="No" />No
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P9" name="P9" value="Si, pero con dudas" />Si, pero con dudas
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                En caso de haber acudido a una entrevista presencial, ¿se te informó oportunamente con quién debías presentarte?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P10" name="P10" value="Sí" />Sí
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P10" name="P10" value="No" />No
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P10" name="P10" value="Sí, pero con dudas" />Sí, pero con dudas
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divGenerico">
+                        <div class="tituloP">
+                            Visita al Hospital<br />
+                            <label style="font-size:12px">Entrevista presencial con Director General de la Unidad de Negocios</label>
+                        </div>
+
+                        <div class="pregunta">
+                            <label>
+                                En tu visita a hospital, ¿alguna persona te recibió para pasarte a entrevista?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P11" name="P11" value="Sí" />Sí
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P11" name="P11" value="No" />No
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                ¿El entrevistador aclaró tus dudas y complementó la información de la vacante?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P12" name="P12" value="Sí" />Sí
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P12" name="P12" value="No" />No
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                ¿El entrevistador fue amable contigo?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    Nada amable
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P13" name="P13" value="1" />1
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P13" name="P13" value="2" />2
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P13" name="P13" value="3" />3
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P13" name="P13" value="4" />4
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P13" name="P13" value="5" />5
+                                </div>
+                                <div class="radio">
+                                     Muy amable
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                Para tu entrevista presencial, ¿tuviste que viajar a alguno de nuestros hospitales y/o Oficinas Corporativas?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P14" name="P14" value="Sí" />Sí
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P14" name="P14" value="No" />No
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                En caso de haber viajado a alguna otra sede, ¿se te ofreció el pago de tus viáticos?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P15" name="P15" value="Sí" />Sí
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P15" name="P15" value="No" />No
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P15" name="P15" value="No aplica" /> No aplica
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divGenerico">
+                        <div class="tituloP">Satisfacción general</div>
+
+                        <div class="pregunta">
+                            <label>
+                                ¿El reclutador dio seguimiento puntual a tu proceso durante todas las etapas?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    Nada satisfecho
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P16" name="P16" value="1" />1
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P16" name="P16" value="2" />2
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P16" name="P16" value="3" />3
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P16" name="P16" value="4" />4
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P16" name="P16" value="5" />5
+                                </div>
+                                <div class="radio">
+                                     Muy satisfecho
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                En general, ¿Qué tan satisfecho estás con el proceso de reclutamiento?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    Nada satisfecho
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P17" name="P17" value="1" />1
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P17" name="P17" value="2" />2
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P17" name="P17" value="3" />3
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P17" name="P17" value="4" />4
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P17" name="P17" value="5" />5
+                                </div>
+                                <div class="radio">
+                                      Muy satisfecho
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                En función de tu experiencia, ¿recomendarías a Star Médica como lugar para trabajar, a un colega o conocido?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <input type="radio" id="P18" name="P18" value="Sí" />Sí
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P18" name="P18" value="No" />No
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="P18" name="P18" value="Tal vez" />Tal vez
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pregunta">
+                            <label>
+                                ¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?<label style="color:red;">*</label>
+                            </label>
+                            <div class="respuestas">
+
+                                <div class="radio">
+                                    <textarea class="textA" id="P19" name="P19"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divGenerico">
+                        <div class="tituloP">
+
+
+                            <button onclick="guardarDatos()">Enviar</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    }
+</body>
+</html>
+<script>
+    function guardarDatos() {
+        var err = 0;
+        if ($('input:radio[name=P1]').is(':checked')==false) { err++; }
+        if ($('input:radio[name=P2]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P3]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P4]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P5]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P6]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P7]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P8]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P9]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P10]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P11]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P12]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P13]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P14]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P15]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P16]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P17]').is(':checked') == false) { err++; }
+        if ($('input:radio[name=P18]').is(':checked') == false) { err++; }
+        if ($("#P19").val() == "") { err++; }
+        //$('input:radio[name=P2]:checked')
+        if (err > 0) {
+            MNotif("Debe contestar todas las preguntas", "alert");
+        }
+        if (err === 0) {
+
+            var userId = $("#Id_Usuario").val() || '0';
+            var data = {
+                "mail": $('#mail').val(),
+                "P1": $('input:radio[name=P1]:checked').val(),
+                "P2": $('input:radio[name=P2]:checked').val(),
+                "P3": $('input:radio[name=P3]:checked').val(),
+                "P4": $('input:radio[name=P4]:checked').val(),
+                "P5": $('input:radio[name=P5]:checked').val(),
+                "P6": $('input:radio[name=P6]:checked').val(),
+                "P7": $('input:radio[name=P7]:checked').val(),
+                "P8": $('input:radio[name=P8]:checked').val(),
+                "P9": $('input:radio[name=P9]:checked').val(),
+                "P10": $('input:radio[name=P10]:checked').val(),
+                "P11": $('input:radio[name=P11]:checked').val(),
+                "P12": $('input:radio[name=P12]:checked').val(),
+                "P13": $('input:radio[name=P13]:checked').val(),
+                "P14": $('input:radio[name=P14]:checked').val(),
+                "P15": $('input:radio[name=P15]:checked').val(),
+                "P16": $('input:radio[name=P16]:checked').val(),
+                "P17": $('input:radio[name=P17]:checked').val(),
+                "P18": $('input:radio[name=P18]:checked').val(),
+                "P19": $("#P19").val()
+
+            }
+           // AjaxGenerico(1, "Create", data)
+
+            $("#DivLoader").show(); try {
+                $.ajax({
+                    url: '../Create', type: "POST", data: data, success: function (a) {
+                        RespuestaAjax(1, a)
+                    }, error: function (a, data, r) {
+                        if (401 == a.status || 403 == a.status) { var n = window.location.protocol + "//" + window.location.host; window.location.href = n, alert("Tu sesión ha finalizado") } else 500 == a.status && ($("#DivLoader").hide(), MNotif("Ocurrió un error al hacer la petición al servidor, f:" + e, "error"))
+                    }
+                })
+            } catch (a) { $("#DivLoader").hide(), MNotif("Ocurrió un error al hacer la petición al servidor, f:" + e, "error") }
+        } 
+    }
+    function RespuestaAjax(Id, data) {
+        try {
+            switch (Id) {
+                case 1:
+                   
+                    if (data.resp == 1) {
+                        $("#Enc").toggle();
+                        $("#Gracias").toggle();
+                     }
+                        else {
+                            MNotif("Su encuesta ya ha sido respondida con anterioridad", "alert");
+                        }
+                    break;
+              
+                default:
+            }
+            $("#DivLoader").hide();
+        } catch (err) {
+            $("#DivLoader").hide();
+            MNotif("Ocurrió un error al recibir la respuesta del servidor, f:" + Id, "error")
+        }
+    }
+
+
+</script>
