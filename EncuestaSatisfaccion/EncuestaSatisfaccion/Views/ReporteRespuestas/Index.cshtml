@@ -208,22 +208,22 @@
         var fif = $("#Ffaltaf").val();
         var fff = $("#Ffcontestadof").val();
         var p = $("#Fpuesto").val();
-        if (fif < fi) {
-            MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
-            return;
-        }
-        if (fff < ff) {
-            MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
-            return;
-        }
+        //if (fif < fi) {
+        //    MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+        //    return;
+        //}
+        //if (fff < ff) {
+        //    MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+        //    return;
+        //}
 
         var data = {
             "n": n,
             "c":c,
             "fi": fi,
             "ff": ff,
-            "fif": fi,
-            "fff": ff,
+            "fif": fif,
+            "fff": fff,
             "p": p,
         }
           AjaxGenerico(0, 'gDta', data);

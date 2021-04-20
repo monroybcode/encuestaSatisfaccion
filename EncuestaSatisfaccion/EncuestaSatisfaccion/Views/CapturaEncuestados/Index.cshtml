@@ -23,12 +23,71 @@
                 <div class="col-12" style="text-align:center;color:#4b4e53">
                     <h3>
                         <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Administración de encuestados</span>
-                        <button type="button" class="btn btn-primary" title="Nuevo" style="float:right;" id="nuevoUser"> <i class="fas fa-user fa-1x"></i>&nbsp;Agregar </button>
+                        
                     </h3>
                 </div>
             </div>
         </div>
         <div class="row">
+            <div class="col-4">
+                <label class="form-control-label">
+                    Nombre
+                </label>
+                <input type="text" class="form-control" title="Nombre" id="Fnombre" />
+            </div>
+
+            <div class="col-4">
+                <label class="form-control-label">
+                    Puesto
+                </label>
+                <input type="text" class="form-control" title="puesto" id="Fpuesto" />
+            </div>
+            <div class="col-2">
+                <label class="form-control-label">
+                    Encuesta respondida
+                </label>
+                <select id="Fcontestado" style="width:100%;    height: 28px;" class="form-control">
+                    <option value="2">No</option>
+                    <option value="1">Si</option>
+
+                    <option value="0">Todas...</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-2">
+                <label class="form-control-label">
+                    Fecha Alta Inicial
+                </label>
+                <input type="date" class="form-control" id="Ffalta" />
+            </div>
+            <div class="col-2">
+                <label class="form-control-label">
+                    Fecha Alta Final
+                </label>
+                <input type="date" class="form-control" id="Ffaltaf" />
+            </div>
+            <div class="col-2">
+                <label class="form-control-label">
+                    Fecha Contestado Inicial
+                </label>
+                <input type="date" class="form-control" id="Ffcontestado" />
+            </div>
+            <div class="col-2">
+                <label class="form-control-label">
+                    Fecha Contestado Final
+                </label>
+                <input type="date" class="form-control" id="Ffcontestadof" />
+            </div>
+            <div class="col-1">
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="gdata();"> <span><i class="nav-icon fas fa-search"></i> Buscar</span></button>
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-primary" title="Nuevo" style="float:right;margin-top: 10px;" id="nuevoUser"> <i class="fas fa-user fa-1x"></i>&nbsp;Agregar </button>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:15px;">
             <div class="col-12" style="padding-top:10px">
                 <table id="TablaUsuarios" class="table table-striped" style="width:100%">
                     <thead class="LTT12B">
@@ -54,16 +113,21 @@
                                 <td>@str2.fechaAlta</td>
                                 @if (str2.Contestada == 1)
                                 {
-                                    <td><button class="btn btn-starmedica-success btn-sm"  DUsId="@str2.Id" title="Contestada"><i class="fas fa-check-circle"></i></button></td>
+                                    <td><button class="btn btn-starmedica-success btn-sm" DUsId="@str2.Id" title="Contestada"><i class="fas fa-check-circle"></i></button></td>
                                 }
                                 else
                                 {
-                                    <td><button class="btn btn-starmedica-danger btn-sm "  title="Sin Contestar"><i class="fas fa-times-circle"></i></button></td>
+                                    <td><button class="btn btn-starmedica-danger btn-sm " title="Sin Contestar"><i class="fas fa-times-circle"></i></button></td>
                                 }
                             <td>
-                                <button class="btn btn-starmedica btn-sm" onclick="ModUser('@str2.Id')" title="Enviar"><i class="fas fa-envelope"></i></button>
-                                <button class="btn btn-starmedica btn-sm" onclick="ModUser('@str2.Id')" title="Revisar"><i class="fas fa-eye"></i></button>
-                               </td>
+                                @if (str2.Contestada == 0)
+                                {
+                                    <button class="btn btn-starmedica btn-sm" onclick="ReEnviar(@str2.Id)" title="ReEnviar"><i class="fas fa-envelope"></i></button>
+                                }
+                                @if (str2.Contestada == 1)
+                                {
+                                    <button class="btn btn-starmedica btn-sm" onclick="VerResp(@str2.Id)" title="Revisar"><i class="fas fa-eye"></i></button>
+                                } </td>
                             </tr>
                         }
                     </tbody>
@@ -147,17 +211,19 @@
     <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><span class="AccLib"></span> usuario</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><span class="AccLib"></span> Respuestas </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h6>¿Estás seguro de <span class="AccLib2"></span> el usuario "<span id="NomUser"></span>"?</h6>
+                <div id="respuestas">
+
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="BtnDelUser"><span class="AccLib"></span></button>
-                <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+               
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -179,6 +245,12 @@
     //var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "50vh");
     var UsrIdC = 0;
     var StaUsr;
+
+    var now = new Date();
+    var today = now.getFullYear() + "-0" + (now.getMonth() - 2)+"-0"+ now.getDay();
+    $("#Ffalta").val(today);
+
+
     $("#nuevoUser").click(function () {
         //$("#ModalUsuario").data('data-title', "Modificar usuario");
         LimpiarInputDiv("formUsuarios");
@@ -186,34 +258,47 @@
         $("#ModalUsuario").modal("show")
     });
 
-    function DelUser(UsrId) {
-        UsrIdC = UsrId;
-        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrId, 0);
-        var Datos = TablaUsuarios.row(rowId).data()
-        $("#NomUser").text(Datos[1])
-        $(".AccLib").text("Desactivar")
-        $(".AccLib2").text("desactivar")
-        $("#BtnDelUser").removeClass("btn-primary").addClass("btn-danger")
-        StaUsr = false;
-        $("#MDelLib").modal("show");
+    function VerResp(Id) {
+        var Datos = { "Id": Id };
+        AjaxGenerico(4, "GetRespuestas", Datos)
     }
 
-    function ActUser(UsrId) {
-        UsrIdC = UsrId;
-        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrId, 0);
-        var Datos = TablaUsuarios.row(rowId).data(); $("#NomUser").text(Datos[1]);
-        $(".AccLib").text("Activar"); $(".AccLib2").text("activar");
-        $("#BtnDelUser").removeClass("btn-danger").addClass("btn-primary");
-        StaUsr = true; $("#MDelLib").modal("show");
+    function ReEnviar(Id) {
+            var Datos = { "Id": Id };
+            AjaxGenerico(3, "reenviar", Datos)
     }
 
-    $("#BtnDelUser").click(function () {
-        var An;
-        var Datos = { "Id_Usuario": UsrIdC, "Est": StaUsr };
-        if (StaUsr == true) An = 3;
-        else An = 4;
-        AjaxGenerico(An, "AccionesUsuario", Datos)
-    })
+    function gdata() {
+
+        var n = $("#Fnombre").val();
+        var c = $("#Fcontestado").val();
+        var fi = $("#Ffalta").val();
+        var ff = $("#Ffcontestado").val();
+        var fif = $("#Ffaltaf").val();
+        var fff = $("#Ffcontestadof").val();
+        var p = $("#Fpuesto").val();
+        //if (fif < fi) {
+        //    MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+        //    return;
+        //}
+        //if (fff < ff) {
+        //    MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+        //    return;
+        //}
+
+        var data = {
+            "n": n,
+            "c": c,
+            "fi": fi,
+            "ff": ff,
+            "fif": fif,
+            "fff": fff,
+            "p": p,
+        }
+        AjaxGenerico(0, 'gDta', data);
+
+    }
+
 
     function ObtenerCHE(DivID) {
         var UMEdCheck = "";
@@ -262,15 +347,42 @@
         }
 
 
-    function ModUser(usID) {
-        var Datos = { "Id_User": usID };
-        AjaxGenerico(2, "GetUSer", Datos)
-    }
+
 
 
     function RespuestaAjax(Id, data) {
         try {
             switch (Id) {
+                case 0:
+                    if (data.R == 1) {
+
+                        TablaUsuarios.clear().draw();
+                        if (data.listado != "") {
+                            var dta = data.listado;
+                            var rows = []
+                            for (var x = 0; x < dta.length; x++) {
+
+                                rows.push([
+                                    dta[x]["Id"],
+                                    dta[x]["Nombre"] + " " + dta[x]["Apa"] + " " + dta[x]["Ama"],
+                                    dta[x]["mail"],
+                                    dta[x]["puesto"],
+                                    ConvEFDate(dta[x]["fechaAlta"], "dd/MM/yyyy HH:mm"),
+                                    (dta[x]["Contestada"] == 1 ? '<button class="btn btn-starmedica-success btn-sm" DUsId="' + dta[x]["id"] + '" title="Contestada"><i class="fas fa-check-circle"></i></button>' :
+                                        ' <td><button class="btn btn-starmedica-danger btn-sm " title="Sin Contestar"><i class="fas fa-times-circle"></i></button>'),
+                                    (dta[x]["Contestada"] == 0 ? '<button class="btn btn-starmedica btn-sm" onclick="ReEnviar('+ dta[x]["Id"]+')" title="ReEnviar"><i class="fas fa-envelope"></i></button>' : "")+
+                                    (dta[x]["Contestada"] == 1 ?'<button class="btn btn-starmedica btn-sm" onclick="VerResp(' + dta[x]["Id"] + ')" title="Revisar"><i class="fas fa-eye"></i></button>':"")
+                                ])
+
+                            }
+                            TablaUsuarios.rows.add(rows).draw();
+                        }
+
+
+                    } else {
+                        MNotif("Ocurrio un problema al consultar, intente de nuevo.", "alert")
+                    }
+                    break;
                 case 1:
                     if (data.R == 2) {
                         MNotif(data.msg, "alert");
@@ -298,9 +410,9 @@
                             $("#puesto").val(),
                             ConvEFDate( data.enc.fechaAlta,"dd/MM/yyyy HH:mm:ss"),
                             BtnEstatusL,
-                            ' <button class="btn btn-starmedica btn-sm" onclick="ModUser(' + data.enc.Id+')" title="Enviar"><i class="fas fa-envelope"></i></button>'+
-                            '  <button class="btn btn-starmedica btn-sm" onclick="ModUser(' + data.enc.Id+')" title="Revisar"><i class="fas fa-eye"></i></button>'
-                        ];
+                            (data.enc.Contestada  == 0 ? '<button class="btn btn-starmedica btn-sm" onclick="ReEnviar(' + data.enc.Id+ ')" title="ReEnviar"><i class="fas fa-envelope"></i></button>' : "") +
+                            (data.enc.Contestada  == 1 ? '<button class="btn btn-starmedica btn-sm" onclick="VerResp(' + data.enc.Id + ')" title="Revisar"><i class="fas fa-eye"></i></button>' : "")
+                               ];
                         UpdateTableRow(rData, data.Id, TablaUsuarios, "TablaUsuarios")
                         $("#ModalUsuario").modal("hide")
                         MNotif("Datos guardados", "success")
@@ -322,15 +434,53 @@
                     $("#ModalUsuario").modal("show")
                     break;
                 case 3:
+                    if (data.R == 1) {
 
+                        MNotif("La encuesta ha sido enviada", "alert");
+                    }
+                    else
+                        if (data.R == 0) {
+                            MNotif("Existio un problema, intentelo de nuevo", "alert")
+                        }
                     break;
                 case 4:
 
+                    if (data.R == 1) {
+                        if (data.r != "") {
+                            var en = data.enc;
+                            var dta = data.r;
+                            var txt = "<div style='margin-bottom:10px;'>Encuestado: <label class='form-control - label'> " + en.Nombre+" "+en.Apa+" "+en.Ama + "</label></div>" +
+                                "<div>Estatus del candidato<label class='form-control - label'> " + dta.rp1 + "</label></div>" +
+                                "<div>Reclutador o primer contacto<label class='form-control - label'> " + dta.rp2 + "</label></div>" +
+                                "<div>¿Cómo te enteraste de la vacante?<label class='form-control - label'> " + dta.rp3 + "</label></div>" +
+                                "<div>Cuando leíste la descripción del trabajo, ¿era clara y comprensible?<label class='form-control - label'> " + dta.rp4 + "</label></div>" +
+                                "<div> Después de que te postulaste o enviaste tu información, ¿Cuánto tiempo tardamos en contactarte?<label class='form-control - label'> " + dta.rp5 + "</label></div>" +
+                                "<div>¿El reclutador se comportó amable durante la entrevista?<label class='form-control - label'> " + dta.rp6 + "</label></div>" +
+                                "<div>¿El reclutador explicó claramente los detalles del puesto?<label class='form-control - label'> " + dta.rp7 + "</label></div>" +
+                                "<div>¿Te sentiste cómodo durante la entrevista?<label class='form-control - label'> " + dta.rp8 + "</label></div>" +
+                                "<div>Después de la entrevista, ¿se te informó cuáles serían los siguientes pasos del proceso?<label class='form-control - label'> " + dta.rp9 + "</label></div>" +
+                                "<div>En caso de haber acudido a una entrevista presencial, ¿se te informó oportunamente con quién debías presentarte?<label class='form-control - label'> " + dta.rp10 + "</label></div>" +
+                                "<div>En tu visita a hospital, ¿alguna persona te recibió para pasarte a entrevista?<label class='form-control - label'> " + dta.rp11 + "</label></div>" +
+                                "<div>¿El entrevistador aclaró tus dudas y complementó la información de la vacante?<label class='form-control - label'> " + dta.rp12 + "</label></div>" +
+                                "<div> ¿El entrevistador fue amable contigo?<label class='form-control - label'> " + dta.rp13 + "</label></div>" +
+                                "<div>Para tu entrevista presencial, ¿tuviste que viajar a alguno de nuestros hospitales y/o Oficinas Corporativas?<label class='form-control - label'> " + dta.rp14 + "</label></div>" +
+                                "<div>En caso de haber viajado a alguna otra sede, ¿se te ofreció el pago de tus viáticos?<label class='form-control - label'> " + dta.rp15 + "</label></div>" +
+                                "<div>¿El reclutador dio seguimiento puntual a tu proceso durante todas las etapas?<label class='form-control - label'> " + dta.rp16 + "</label></div>" +
+                                "<div>En general, ¿Qué tan satisfecho estás con el proceso de reclutamiento?<label class='form-control - label'> " + dta.rp17 + "</label></div>" +
+                                "<div>En función de tu experiencia, ¿recomendarías a Star Médica como lugar para trabajar, a un colega o conocido?<label class='form-control - label'> " + dta.rp18 + "</label></div>" +
+                                "<div>¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?<label class='form-control - label'> " + dta.rp19 + "</label></div>";
+
+                            $("#respuestas").html(txt);
+
+                            }
+
+
+                        $("#MDelLib").modal("show");
+
+                    }
 
                     break;
-                case 5:
 
-                    break;
                 default:
             }
             $("#DivLoader").hide();
