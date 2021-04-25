@@ -19,11 +19,12 @@
 <div class="container-fluid">
     <div class="card card-cascade narrower">
         <div class="card-title">
-            <div class="row">
-                <div class="col-12" style="text-align:center;color:#4b4e53">
+            <div class="row" style="margin-top:20px;">
+                <div class="col-12" style="text-align: left; padding-left: 7px; color: #4b4e53;">
                     <h3>
-                        <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Reprote Respuestas</span>
-                          </h3>
+                        <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Reporte Respuestas</span>
+                        <img style="height:49px;margin-right:20px; float:right;" src="~/Images/logo-login.png" />
+                    </h3>
                 </div>
             </div>
         </div>
@@ -41,80 +42,76 @@
                 </label>
                 <input type="text" class="form-control" title="puesto" id="Fpuesto" />
             </div>
-            @*<div class="col-2">
-                <label class="form-control-label">
-                    Encuesta respondida
-                </label>
-                <select id="Fcontestado" style="width:100%;    height: 28px;" class="form-control">
-                    <option value="0">Todas...</option>
-                    <option value="1">Si</option>
-                    <option value="2">No</option>
-                </select>
-            </div>*@
+          
         </div>
-            <div class="row" style="margin-top:10px">
-                <div class="col-2">
-                    <label class="form-control-label">
-                        Fecha Alta Inicial
-                    </label>
-                    <input type="date" class="form-control" id="Ffalta" />
-                </div>
-                <div class="col-2">
-                    <label class="form-control-label">
-                        Fecha Alta Final
-                    </label>
-                    <input type="date" class="form-control" id="Ffaltaf" />
-                </div>
-                <div class="col-2">
-                    <label class="form-control-label">
-                        Fecha Contestado Inicial
-                    </label>
-                    <input type="date" class="form-control" id="Ffcontestado" />
-                </div>
-                <div class="col-2">
-                    <label class="form-control-label">
-                        Fecha Contestado Final
-                    </label>
-                    <input type="date" class="form-control" id="Ffcontestadof" />
-                </div>
-                <div class="col-1">
-                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="gdata();"> <span><i class="nav-icon fas fa-search"></i> Buscar</span></button>
-                </div>
-                <div class="col-1">
-                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="reprrEx()" tabindex="0" aria-controls="" type="button" title="Exportar a excel"><span><i class="nav-icon fas fa-file-excel"></i> Excel</span></button>
-
-                </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-2">
+                <label class="form-control-label">
+                    Fecha Alta Inicial
+                </label>
+                <input type="date" class="form-control" id="Ffalta" />
             </div>
+            <div class="col-2">
+                <label class="form-control-label">
+                    Fecha Alta Final
+                </label>
+                <input type="date" class="form-control" id="Ffaltaf" />
+            </div>
+            <div class="col-2">
+                <label class="form-control-label">
+                    Fecha Contestado Inicial
+                </label>
+                <input type="date" class="form-control" id="Ffcontestado" />
+            </div>
+            <div class="col-2">
+                <label class="form-control-label">
+                    Fecha Contestado Final
+                </label>
+                <input type="date" class="form-control" id="Ffcontestadof" />
+            </div>
+            <div class="col-1">
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="gdata();"> <span><i class="nav-icon fas fa-search"></i> Buscar</span></button>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="reset()" tabindex="0" aria-controls="" type="button" title="Limpiar"><span><i class="nav-icon fas fa-recycle"></i> Limpiar</span></button>
+
+            </div>
+            <div class="col-1">
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="reprrEx()" tabindex="0" aria-controls="" type="button" title="Exportar a excel"><span><i class="nav-icon fas fa-file-excel"></i> Excel</span></button>
+
+            </div>
+
+        </div>
             <div class="row" style="margin-top:20px;">
                 <div class="col-12" style="padding-top:10px">
                     <table id="TablaRespuestas" class="table table-striped" style="width:100%">
                         <thead class="LTT12B">
                             <tr>
-                                <th>Id</th>
-                                <th>Nombre Encuestado</th>
-                                <th>Contestado</th>
-                                <th>Puesto</th>
-                                <th>Fecha alta</th>
-                                <th>Fecha contestado</th>
-                                <th>Estatus del candidato</th>
-                                <th> Reclutador o primer contacto</th>
-                                <th> ¿Cómo te enteraste de la vacante?</th>
-                                <th>Cuando leíste la descripción del trabajo, ¿era clara y comprensible?</th>
-                                <th> Después de que te postulaste o enviaste tu información, ¿Cuánto tiempo tardamos en contactarte?</th>
-                                <th>¿El reclutador se comportó amable durante la entrevista?</th>
-                                <th>¿El reclutador explicó claramente los detalles del puesto?</th>
-                                <th>¿Te sentiste cómodo durante la entrevista?</th>
-                                <th> Después de la entrevista, ¿se te informó cuáles serían los siguientes pasos del proceso?</th>
-                                <th> En caso de haber acudido a una entrevista presencial, ¿se te informó oportunamente con quién debías presentarte?</th>
-                                <th>En tu visita a hospital, ¿alguna persona te recibió para pasarte a entrevista?</th>
-                                <th>¿El entrevistador aclaró tus dudas y complementó la información de la vacante?</th>
-                                <th> ¿El entrevistador fue amable contigo?</th>
-                                <th> Para tu entrevista presencial, ¿tuviste que viajar a alguno de nuestros hospitales y/o Oficinas Corporativas?</th>
-                                <th> En caso de haber viajado a alguna otra sede, ¿se te ofreció el pago de tus viáticos?</th>
-                                <th>¿El reclutador dio seguimiento puntual a tu proceso durante todas las etapas?</th>
-                                <th>En general, ¿Qué tan satisfecho estás con el proceso de reclutamiento?</th>
-                                <th>En función de tu experiencia, ¿recomendarías a Star Médica como lugar para trabajar, a un colega o conocido?</th>
-                                <th>¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?</th>
+                                <th >Id</th>
+                                <th title="Nombre Encuestado "><span style="opacity:0 !important">_____________</span><br /> Nombre Encuestado</th>
+                                <th title="Contestado"><span style="opacity:0 !important">_____________</span><br />Contestado</th>
+                                <th title="Puesto"><span style="opacity:0 !important">_____________</span><br />Puesto</th>
+                                <th title="Fecha alta"><span style="opacity:0 !important">_____________</span><br />Fecha alta</th>
+                                <th title="Fecha contestado"><span style="opacity:0 !important">_____________</span><br />Fecha contestado</th>
+                                <th title="Estatus del candidato"><span style="opacity:0 !important">_____________</span><br />Estatus del candidato</th>
+                                <th title="Reclutador o primer contacto"><span style="opacity:0 !important">_____________</span><br /> Reclutador o primer contacto</th>
+                                <th title="¿Cómo te enteraste de la vacante?"><span style="opacity:0 !important">_____________</span><br /> ¿Cómo te enteraste de la vacante?</th>
+                                <th title="Cuando leíste la descripción del trabajo, ¿era clara y comprensible?"><span style="opacity:0 !important">_____________</span><br />Cuando leíste la descripción del ...</th>
+                                <th title="Después de que te postulaste o enviaste tu información, ¿Cuánto tiempo tardamos en contactarte?"><span style="opacity:0 !important">_____________</span><br /> Después de que te postulaste o ..</th>
+                                <th title="¿El reclutador se comportó amable durante la entrevista?"><span style="opacity:0 !important">_____________</span><br />¿El reclutador se comportó amable ..</th>
+                                <th title="¿El reclutador explicó claramente los detalles del puesto?"><span style="opacity:0 !important">_____________</span><br />¿El reclutador explicó claramente ..</th>
+                                <th title="¿Te sentiste cómodo durante la entrevista?"><span style="opacity:0 !important">_____________</span><br />¿Te sentiste cómodo durante la entrevista?</th>
+                                <th title="Después de la entrevista, ¿se te informó cuáles serían los siguientes pasos del proceso?"><span style="opacity:0 !important">_____________</span><br /> Después de la entrevista, ¿se te informó ..</th>
+                                <th title=" En caso de haber acudido a una entrevista presencial, ¿se te informó oportunamente con quién debías presentarte?"><span style="opacity:0 !important">_____________</span><br /> En caso de haber acudido a una ...</th>
+                                <th title="En tu visita a hospital, ¿alguna persona te recibió para pasarte a entrevista?"><span style="opacity:0 !important">_____________</span><br />En tu visita a hospital, ..</th>
+                                <th title="¿El entrevistador aclaró tus dudas y complementó la información de la vacante?"><span style="opacity:0 !important">_____________</span><br />¿El entrevistador aclaró tus dudas y..</th>
+                                <th title="¿El entrevistador fue amable contigo?"><span style="opacity:0 !important">_____________</span><br /> ¿El entrevistador fue amable contigo?</th>
+                                <th title="Para tu entrevista presencial, ¿tuviste que viajar a alguno de nuestros hospitales y/o Oficinas Corporativas?"><span style="opacity:0 !important">_____________</span><br /> Para tu entrevista presencial, ¿tuviste que...</th>
+                                <th title="En caso de haber viajado a alguna otra sede, ¿se te ofreció el pago de tus viáticos?"><span style="opacity:0 !important">_____________</span><br /> En caso de haber viajado a alguna otra...</th>
+                                <th title="¿El reclutador dio seguimiento puntual a tu proceso durante todas las etapas?"><span style="opacity:0 !important">_____________</span><br />¿El reclutador dio seguimiento puntual a ...</th>
+                                <th title="En general, ¿Qué tan satisfecho estás con el proceso de reclutamiento?"><span style="opacity:0 !important">_____________</span><br />En general, ¿Qué tan satisfecho estás ..</th>
+                                <th title="En función de tu experiencia, ¿recomendarías a Star Médica como lugar para trabajar, a un colega o conocido?"><span style="opacity:0 !important">_____________</span><br />En función de tu experiencia, ¿recomendarías a ...</th>
+                                <th title="¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?"><span style="opacity:0 !important">_____________</span><br />¿Tienes algún comentario o sugerencia adicional ...</th>
 
                             </tr>
                         </thead>
@@ -147,12 +144,13 @@
                                     <td>@str2.rp16</td>
                                     <td>@str2.rp17</td>
                                     <td>@str2.rp18</td>
-                                    <td>@str2.rp19</td>
+                                    <td><div style="overflow: hidden;height: 20px;word-break: break-all;white-space: nowrap;    width: 71px;text-overflow: ellipsis;" title="@str2.rp19">@str2.rp19</div></td>
 
                                 </tr>
                             }
                         </tbody>
                     </table>
+                    Nota: Si en el texto aparecen al final "...", coloque el cursor encima para ver el texto completo.
                 </div>
             </div>
         </div>
@@ -171,22 +169,33 @@
 
     history.pushState('', '', '/ReporteRespuestas/Index');
 
+    function reset() {
+        $("#Fnombre").val('');
+        $("#Fnombre").val('');
+        $("input[type=date]").val("")
+        $("#Ffcontestado").val('').trigger('change');
+        $("#Ffaltaf").val('');
+         $("#Ffcontestadof").val('');
+        $("#Fpuesto").val('');
+        gdata();
+    }
+
     function reprrEx() {
         var n = $("#Fnombre").val();
         var c = 0;
-        var fi = $("#Ffalta").val();
+        var fi = $("#Fnombre").val();
         var ff = $("#Ffcontestado").val();
         var fif = $("#Ffaltaf").val();
         var fff = $("#Ffcontestadof").val();
         var p = $("#Fpuesto").val();
-        if (fif < fi) {
-            MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
-            return;
-        }
-        if (fff < ff) {
-            MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
-            return;
-        }
+        //if (fif < fi) {
+        //    MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+        //    return;
+        //}
+        //if (fff < ff) {
+        //    MNotif("La fecha de incial no puede ser menor a la fecha final.", "warning");
+        //    return;
+        //}
 
         var data = {
             "n": n,
@@ -268,7 +277,7 @@
                                         dta[x]["rp16"],
                                         dta[x]["rp17"],
                                         dta[x]["rp18"],
-                                        dta[x]["rp19"],
+                                        '<div style="overflow: hidden;height: 20px;word-break: break-all;text-overflow: ellipsis;white-space: nowrap; width: 71px;" title="'+dta[x]["rp19"]+'">'+ dta[x]["rp19"]+'</div>',
                                     ])
                                 }
                                 TablaRespuestas.rows.add(rows).draw();

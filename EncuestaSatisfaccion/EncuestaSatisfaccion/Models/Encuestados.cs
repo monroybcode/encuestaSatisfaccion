@@ -24,6 +24,7 @@ namespace EncuestaSatisfaccion.Models
         [ForeignKey("UserCap")]
         public virtual ApplicationUser IdApplicationUser { get; set; }
         public int Contestada { get; set; }
+        public int DiasVig { get; set; }
 
     }
 }

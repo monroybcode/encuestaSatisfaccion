@@ -90,10 +90,10 @@ namespace EncuestaSatisfaccion.Controllers
         {
             try
             {
-                string html = "<label style='font-size:14px;font-weight:bold;'> Hola " + Mensaje + "</label></br>" +
-                       "¿Deseas contestar una breve encuesta para ayudarnos a mejorar nuestros servicios? ¡Sólo te tomará 5 minutos!" +
-                       "<br/> https://" + Titulo + ":8082/Encuesta/Encuesta/12?mail=" + MailTo + "<br/>" +
-                   "Gracias de antemano por tus valiosos comentarios.  Tu opinión será utilizada para asegurar que continuemos mejorando. ";
+                string html = "<label style='font-size:14px;font-weight:bold;'> Hola " + Mensaje + "</label></br></br></br>" +
+                       "¿Deseas contestar una breve encuesta para ayudarnos a mejorar nuestra atención? " +
+                       "<br/> <a href='https://" + Titulo + ":8082/Encuesta/Encuesta/12?mail=" + MailTo + "'> https://" + Titulo + ":8082/Encuesta/Encuesta/12?mail=" + MailTo + "<a/> <br/>" +
+                   "<br/><br/>Gracias de antemano por tus valiosos comentarios.";
 
 
                 DateTime localDate = DateTime.Now;
@@ -103,8 +103,9 @@ namespace EncuestaSatisfaccion.Controllers
                     
                         mail.To.Add(MailTo);
                     
-                    mail.Subject = "Encuesta Star Medica";
+                    mail.Subject = " Encuesta Candidato Star Médica ";
                     mail.Body = html;
+                    
                     mail.IsBodyHtml = true;
                     if (Adjunto != "")
                     {

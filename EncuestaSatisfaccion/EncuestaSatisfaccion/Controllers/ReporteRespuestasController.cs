@@ -119,7 +119,7 @@ namespace ControlAcceso.Controllers
                 });
 
                 if (n.Trim() != "") {
-                   lp= lp.Where(x => x.nombre.Contains(n));
+                   lp= lp.Where(x => x.nombre.Contains(n.Trim()));
                 }
                 if (c > 0)
                 {
@@ -130,8 +130,9 @@ namespace ControlAcceso.Controllers
                 }
                 if (fi != null && fif != null)
                 {
-                    lp = lp.Where(x => x.fechaAlta >= fi && x.fechaAlta<=fif);
+                    lp = lp.Where(x => x.fechaAlta >= fi || x.fechaAlta<=fif);
                 }
+                else { 
                 if (fi != null) {
                     lp = lp.Where(x => x.fechaAlta >= fi);
                 }
@@ -139,18 +140,22 @@ namespace ControlAcceso.Controllers
                 {
                     lp = lp.Where(x => x.fechaAlta <= fif);
                 }
+                }
 
                 if (ff != null && fff != null)
                 {
                     lp = lp.Where(x => x.fechaContestado >= ff && x.fechaContestado <= fff);
                 }
-                if (ff != null)
+                else
                 {
-                    lp = lp.Where(x => x.fechaContestado >= ff);
-                }
-                if (fif != null)
-                {
-                    lp = lp.Where(x => x.fechaContestado <= fff);
+                    if (ff != null)
+                    {
+                        lp = lp.Where(x => x.fechaContestado >= ff);
+                    }
+                    if (fff != null)
+                    {
+                        lp = lp.Where(x => x.fechaContestado <= fff);
+                    }
                 }
                 if (p.Trim() != "") {
                     lp = lp.Where(x => x.puesto.Contains(p));
@@ -353,10 +358,10 @@ namespace ControlAcceso.Controllers
                     ws.Cells["T1"].Value = " ¿El entrevistador fue amable contigo?";
                     ws.Cells["U1"].Value = "Para tu entrevista presencial, ¿tuviste que viajar a alguno de nuestros hospitales y/o Oficinas Corporativas?";
                     ws.Cells["V1"].Value = "En caso de haber viajado a alguna otra sede, ¿se te ofreció el pago de tus viáticos?";
-                    ws.Cells["X1"].Value = "¿El reclutador dio seguimiento puntual a tu proceso durante todas las etapas?";
-                    ws.Cells["Y1"].Value = "En general, ¿Qué tan satisfecho estás con el proceso de reclutamiento?";
-                    ws.Cells["Z1"].Value = "En función de tu experiencia, ¿recomendarías a Star Médica como lugar para trabajar, a un colega o conocido?";
-                    ws.Cells["AA1"].Value = "¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?";
+                    ws.Cells["W1"].Value = "¿El reclutador dio seguimiento puntual a tu proceso durante todas las etapas?";
+                    ws.Cells["X1"].Value = "En general, ¿Qué tan satisfecho estás con el proceso de reclutamiento?";
+                    ws.Cells["Y1"].Value = "En función de tu experiencia, ¿recomendarías a Star Médica como lugar para trabajar, a un colega o conocido?";
+                    ws.Cells["Z1"].Value = "¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?";
                    
 
 

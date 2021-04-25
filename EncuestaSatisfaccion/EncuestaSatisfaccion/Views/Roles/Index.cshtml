@@ -19,13 +19,16 @@
 <div class="container-fluid">
     <div class="card card-cascade narrower">
         <div class="card-title" style="padding-right:10px;">
-            <div class="row">
-                <div class="col-12" style="text-align:center;color:#4b4e53">
+            <div class="row" style="margin-top:20px;">
+                <div class="col-12" style="text-align: left; padding-left: 7px; color: #4b4e53;">
                     <h3>
                         <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Administración de roles </span>
+
                         <button type="button" class="btn btn-primary" title="Nuevo" style="float:right;" id="nuevoRol"> <i class="fas fa-user fa-1x"></i>&nbsp;&nbsp;Agregar rol</button>
+                        <img style="height:49px;margin-right:20px; float:right;" src="~/Images/logo-login.png" />
                     </h3>
                 </div>
+               
             </div>
         </div>
         <div class="row">
@@ -226,7 +229,7 @@
                 AjaxGenerico(1, '/Roles/GRolD', data);
             } else {
                 if (FSel.length == 0) {
-                     MNotif("El rol debe tener al menos una función asignada", "info")
+                     MNotif("El rol debe tener al menos un permiso asignado.", "info")
                 }
                  $("#GRoles").prop('disabled', false);
                  $("#GRoles").text("Guardar");

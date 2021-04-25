@@ -241,6 +241,10 @@
     <Compile Include="Migrations\202104191632550_fechacontesta.Designer.cs">
       <DependentUpon>202104191632550_fechacontesta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104231932387_diasvig.cs" />
+    <Compile Include="Migrations\202104231932387_diasvig.Designer.cs">
+      <DependentUpon>202104231932387_diasvig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -2356,6 +2360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104191632550_fechacontesta.resx">
       <DependentUpon>202104191632550_fechacontesta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104231932387_diasvig.resx">
+      <DependentUpon>202104231932387_diasvig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

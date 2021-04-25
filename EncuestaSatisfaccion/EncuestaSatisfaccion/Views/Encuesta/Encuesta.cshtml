@@ -10,11 +10,12 @@
         width: 640px;
     }
     .freebirdHeaderCard {
-        background-color:white;
-        margin:15px;
+        background-color: white;
+        margin: 15px;
         background-image: url(https://lh6.googleusercontent.com/SysF_nlZoC10qy2N1JyhkxNXCfwP6P9jCIfvpFCy_VG_1HEPb5b6nWhBYM4YrH3pZv3dGeUGCN-h3shNqcVl8lHAaMDyAKzks8_q3rkqYlG2FHgICet9QuO_QyK3mFoaQw=w1607);
         background-size: contain;
         background-position: center;
+        background-repeat: no-repeat;
     }
     .freebirdFormviewerViewHeaderCard {
         border: 1px solid #dadce0;
@@ -33,13 +34,15 @@
         .m2 .freebirdFormviewerViewFormContent > div, .freebirdFormviewerViewFormContent > .freebirdFormviewerViewNoPadding {
             padding: 0;
         }
+      
+       
     .divGenerico {
         border-radius: 8px;
         background-color: white;
         padding: 20px;
         margin-top: 20px;
         text-align: justify;
-        font-family: HelveticaNeueRoman !important;
+        font-family: HelveticaNeue !important;
         letter-spacing: .5px;
         color: #98999a;
         font-size: 15px;
@@ -54,8 +57,12 @@
     .respuestas {
         margin-top: 5px;
     }
-    .radio{
-        margin:5px;
+    input[type="radio"] {
+        margin: 5px !important;
+    }
+    .tituloP label {
+     color:white !important;
+     font-weight:bolder;
     }
     .tituloP {
         font-family: HelveticaNeue !important;
@@ -64,7 +71,8 @@
         text-align: center;
         padding: 4px;
         border-radius: 8px;
-        margin-bottom: 7px
+        margin-bottom: 7px;
+        font-weight: bolder;
     }
     .textA {
         width: 100%;
@@ -83,11 +91,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Encuesta</title>
+    <link href="~/Content/style.css?v=1.12" rel="stylesheet" />
+    <link href="~/Content/Site.css?1.12" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/Scripts")
     <script src="~/Scripts/FunctionsJS.js?1.12"></script>
 </head>
-<body style="        background-color: #ede7f6;">
+<body style="        background-color: #ede7f6; font-family:Helvetica Neue;">
     <div class="freebirdFormviewerViewHeaderCard freebirdFormviewerViewCenteredContent freebirdViewerHeaderCard freebirdHeaderCard">
     </div>
     @if (ViewBag.mail == "")
@@ -556,10 +566,10 @@
                         </div>
                     </div>
                     <div class="divGenerico">
-                        <div class="tituloP">
+                        <div class="tituloP" onclick="guardarDatos()">
 
 
-                            <button onclick="guardarDatos()">Enviar</button>
+                            <label style="color:white;" >Enviar</label>
 
                         </div>
                     </div>

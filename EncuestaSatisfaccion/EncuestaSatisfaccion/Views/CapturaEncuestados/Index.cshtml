@@ -19,11 +19,11 @@
 <div class="container-fluid">
     <div class="card card-cascade narrower">
         <div class="card-title">
-            <div class="row">
-                <div class="col-12" style="text-align:center;color:#4b4e53">
+            <div class="row" style="margin-top:20px;">
+                <div class="col-12" style="text-align: left; padding-left: 7px; color: #4b4e53;">
                     <h3>
                         <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Administración de encuestados</span>
-                        
+                        <img style="height:49px;margin-right:20px; float:right;" src="~/Images/logo-login.png" />
                     </h3>
                 </div>
             </div>
@@ -83,8 +83,13 @@
                 <button class="btn btn-primary" style="margin-top: 10px;" onclick="gdata();"> <span><i class="nav-icon fas fa-search"></i> Buscar</span></button>
             </div>
             <div class="col-1">
-                <button type="button" class="btn btn-primary" title="Nuevo" style="float:right;margin-top: 10px;" id="nuevoUser"> <i class="fas fa-user fa-1x"></i>&nbsp;Agregar </button>
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="reset()" tabindex="0" aria-controls="" type="button" title="Limpiar"><span><i class="nav-icon fas fa-recycle"></i> Limpiar</span></button>
+
             </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-group-sm" title="Nuevo" style="float:right;margin-top: 10px;" id="nuevoUser"> <i class="fas fa-user fa-1x"></i>&nbsp;Agregar </button>
+            </div>
+
         </div>
 
         <div class="row" style="margin-top:15px;">
@@ -192,6 +197,12 @@
                                     <input type="text" class="form-control" id="puesto" style="height:24px;" maxlength="100" />
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-4" style="text-align:left"><label class="form-control-label">Días Vigencia</label></div>
+                                <div class="col-8">
+                                    <input type="number" min="1" step="1"  value="@(ViewBag.vig)" class="form-control" id="dvig" style="height:24px;"  />
+                                </div>
+                            </div>
                         </div>
                         
                     </div>
@@ -199,7 +210,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" onclick="guardarDatos()">Guardar</button>
-                <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -230,7 +241,7 @@
 </div>
 
 <script>
-
+    var dv=@ViewBag.vig;
     var ColumnD = [{ "targets": [0],  "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "30%", "targets": [2] }, { "width": "30%", "targets": [3] },{ "width": "20%", "targets": [4] }, { "width": "10%", "targets": [5] }, { "width": "10%", "targets": [6] }]
     var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "50vh");
 
@@ -250,12 +261,22 @@
     var today = now.getFullYear() + "-0" + (now.getMonth() - 2)+"-0"+ now.getDay();
     $("#Ffalta").val(today);
 
-
+    function reset() {
+        $("#Fnombre").val('');
+        $("#Fnombre").val('');
+        $("input[type=date]").val("")
+        $("#Ffcontestado").val('').trigger('change');
+        $("#Ffaltaf").val('');
+        $("#Ffcontestadof").val('');
+        $("#Fpuesto").val('');
+        gdata();
+    }
     $("#nuevoUser").click(function () {
         //$("#ModalUsuario").data('data-title', "Modificar usuario");
         LimpiarInputDiv("formUsuarios");
         $("#username").prop('disabled', false);
         $("#ModalUsuario").modal("show")
+        $("#dvig").val(dv);
     });
 
     function VerResp(Id) {
@@ -334,7 +355,7 @@
                 "ama": $("#ama").val(),
                 "Email": $("#email").val(),
                 "puesto": $("#puesto").val(),
-
+                "dvig": $("#dvig").val()
             }
 
             var EmailPac = $("#email").val();
@@ -450,25 +471,25 @@
                             var en = data.enc;
                             var dta = data.r;
                             var txt = "<div style='margin-bottom:10px;'>Encuestado: <label class='form-control - label'> " + en.Nombre+" "+en.Apa+" "+en.Ama + "</label></div>" +
-                                "<div>Estatus del candidato<label class='form-control - label'> " + dta.rp1 + "</label></div>" +
-                                "<div>Reclutador o primer contacto<label class='form-control - label'> " + dta.rp2 + "</label></div>" +
-                                "<div>¿Cómo te enteraste de la vacante?<label class='form-control - label'> " + dta.rp3 + "</label></div>" +
-                                "<div>Cuando leíste la descripción del trabajo, ¿era clara y comprensible?<label class='form-control - label'> " + dta.rp4 + "</label></div>" +
-                                "<div> Después de que te postulaste o enviaste tu información, ¿Cuánto tiempo tardamos en contactarte?<label class='form-control - label'> " + dta.rp5 + "</label></div>" +
-                                "<div>¿El reclutador se comportó amable durante la entrevista?<label class='form-control - label'> " + dta.rp6 + "</label></div>" +
-                                "<div>¿El reclutador explicó claramente los detalles del puesto?<label class='form-control - label'> " + dta.rp7 + "</label></div>" +
-                                "<div>¿Te sentiste cómodo durante la entrevista?<label class='form-control - label'> " + dta.rp8 + "</label></div>" +
-                                "<div>Después de la entrevista, ¿se te informó cuáles serían los siguientes pasos del proceso?<label class='form-control - label'> " + dta.rp9 + "</label></div>" +
-                                "<div>En caso de haber acudido a una entrevista presencial, ¿se te informó oportunamente con quién debías presentarte?<label class='form-control - label'> " + dta.rp10 + "</label></div>" +
-                                "<div>En tu visita a hospital, ¿alguna persona te recibió para pasarte a entrevista?<label class='form-control - label'> " + dta.rp11 + "</label></div>" +
-                                "<div>¿El entrevistador aclaró tus dudas y complementó la información de la vacante?<label class='form-control - label'> " + dta.rp12 + "</label></div>" +
-                                "<div> ¿El entrevistador fue amable contigo?<label class='form-control - label'> " + dta.rp13 + "</label></div>" +
-                                "<div>Para tu entrevista presencial, ¿tuviste que viajar a alguno de nuestros hospitales y/o Oficinas Corporativas?<label class='form-control - label'> " + dta.rp14 + "</label></div>" +
-                                "<div>En caso de haber viajado a alguna otra sede, ¿se te ofreció el pago de tus viáticos?<label class='form-control - label'> " + dta.rp15 + "</label></div>" +
-                                "<div>¿El reclutador dio seguimiento puntual a tu proceso durante todas las etapas?<label class='form-control - label'> " + dta.rp16 + "</label></div>" +
-                                "<div>En general, ¿Qué tan satisfecho estás con el proceso de reclutamiento?<label class='form-control - label'> " + dta.rp17 + "</label></div>" +
-                                "<div>En función de tu experiencia, ¿recomendarías a Star Médica como lugar para trabajar, a un colega o conocido?<label class='form-control - label'> " + dta.rp18 + "</label></div>" +
-                                "<div>¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?<label class='form-control - label'> " + dta.rp19 + "</label></div>";
+                                "<div style='margin-bottom:10px;'>Estatus del candidato<label class='form-control - label'> " + dta.rp1 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>Reclutador o primer contacto<label class='form-control - label'> " + dta.rp2 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>¿Cómo te enteraste de la vacante?<label class='form-control - label'> " + dta.rp3 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>Cuando leíste la descripción del trabajo, ¿era clara y comprensible?<label class='form-control - label'> " + dta.rp4 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'> Después de que te postulaste o enviaste tu información, ¿Cuánto tiempo tardamos en contactarte?<label class='form-control - label'> " + dta.rp5 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>¿El reclutador se comportó amable durante la entrevista?<label class='form-control - label'> " + dta.rp6 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>¿El reclutador explicó claramente los detalles del puesto?<label class='form-control - label'> " + dta.rp7 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>¿Te sentiste cómodo durante la entrevista?<label class='form-control - label'> " + dta.rp8 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>Después de la entrevista, ¿se te informó cuáles serían los siguientes pasos del proceso?<label class='form-control - label'> " + dta.rp9 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>En caso de haber acudido a una entrevista presencial, ¿se te informó oportunamente con quién debías presentarte?<label class='form-control - label'> " + dta.rp10 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>En tu visita a hospital, ¿alguna persona te recibió para pasarte a entrevista?<label class='form-control - label'> " + dta.rp11 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>¿El entrevistador aclaró tus dudas y complementó la información de la vacante?<label class='form-control - label'> " + dta.rp12 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'> ¿El entrevistador fue amable contigo?<label class='form-control - label'> " + dta.rp13 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>Para tu entrevista presencial, ¿tuviste que viajar a alguno de nuestros hospitales y/o Oficinas Corporativas?<label class='form-control - label'> " + dta.rp14 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>En caso de haber viajado a alguna otra sede, ¿se te ofreció el pago de tus viáticos?<label class='form-control - label'> " + dta.rp15 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>¿El reclutador dio seguimiento puntual a tu proceso durante todas las etapas?<label class='form-control - label'> " + dta.rp16 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>En general, ¿Qué tan satisfecho estás con el proceso de reclutamiento?<label class='form-control - label'> " + dta.rp17 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>En función de tu experiencia, ¿recomendarías a Star Médica como lugar para trabajar, a un colega o conocido?<label class='form-control - label'> " + dta.rp18 + "</label></div>" +
+                                "<div style='margin-bottom:10px;'>¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?<label class='form-control - label'> " + dta.rp19 + "</label></div>";
 
                             $("#respuestas").html(txt);
 

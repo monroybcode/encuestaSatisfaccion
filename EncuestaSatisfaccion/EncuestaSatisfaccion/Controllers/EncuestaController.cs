@@ -17,7 +17,7 @@ namespace EncuestaSatisfaccion.Controllers
             var vig = db.VigenciaEnc.Where(x => x.Activo == true).FirstOrDefault();
             if (existe != null)
             {
-                var d = DateTime.Now.AddDays(vig.Dias);
+                var d = DateTime.Now.AddDays(existe.DiasVig);
                 if (existe.fechaAlta <= d)
                 {
                     ViewBag.Vencida = 0;

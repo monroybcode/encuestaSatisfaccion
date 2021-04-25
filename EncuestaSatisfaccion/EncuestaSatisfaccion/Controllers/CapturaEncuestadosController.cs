@@ -16,16 +16,18 @@ namespace EncuestaSatisfaccion.Controllers
         public ActionResult Index()
         {
             var Enc = db.Encuestados.Where(x => x.Contestada == 0).ToList();
-
+            var vig = db.VigenciaEnc.Where(x => x.Activo == true).Select(x=>x.Dias).FirstOrDefault();
             ViewBag.Encuestados = Enc;
+            ViewBag.vig = vig;
             return View();
         }
 
         public ActionResult IndexP()
         {
             var Enc = db.Encuestados.Where(x => x.Contestada == 0).ToList();
-
+            var vig = db.VigenciaEnc.Where(x => x.Activo == true).Select(x => x.Dias).FirstOrDefault();
             ViewBag.Encuestados = Enc;
+            ViewBag.vig = vig;
             return PartialView("Index");
         }
 
@@ -39,7 +41,7 @@ namespace EncuestaSatisfaccion.Controllers
 
                 if (n.Trim() != "")
                 {
-                    lp = lp.Where(x => x.Nombre.Contains(n) || x.Apa.Contains(n) || x.Ama.Contains(n));
+                    lp = lp.Where(x => x.Nombre.Contains(n.Trim()) || x.Apa.Contains(n.Trim()) || x.Ama.Contains(n.Trim()));
                 }
                 if (c > 0)
                 {
@@ -69,7 +71,7 @@ namespace EncuestaSatisfaccion.Controllers
                 {
                     lp = lp.Where(x => x.fechaContestado >= ff);
                 }
-                if (fif != null)
+                if (fff != null)
                 {
                     lp = lp.Where(x => x.fechaContestado <= fff);
                 }
@@ -184,7 +186,7 @@ namespace EncuestaSatisfaccion.Controllers
         }
             // GET: CapturaEncuestados/Create
             [HttpPost]
-        public async Task<ActionResult> Create(int Id, string nombre, string Email, string apa,string ama,string puesto )
+        public async Task<ActionResult> Create(int Id, string nombre, string Email, string apa,string ama,string puesto,int dvig)
         {
             if (Id == 0)
             {//nuevo 
@@ -196,6 +198,7 @@ namespace EncuestaSatisfaccion.Controllers
                 enc.puesto = puesto;
                 enc.fechaAlta = DateTime.Now;
                 enc.Contestada = 0;
+                enc.DiasVig = dvig;
                 enc.UserCap = Session["UserID"].ToString();
 
                 db.Encuestados.Add(enc);
@@ -218,6 +221,7 @@ namespace EncuestaSatisfaccion.Controllers
                 enc.puesto = puesto;
                 enc.fechaAlta = DateTime.Now;
                 enc.Contestada = 0;
+                enc.DiasVig = dvig;
                 enc.UserCap = Session["UserID"].ToString();
 
                 db.Entry(enc).State = EntityState.Modified;
