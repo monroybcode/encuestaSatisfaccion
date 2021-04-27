@@ -11,9 +11,9 @@ namespace EncuestaSatisfaccion.Controllers
     public class EncuestaController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        public ActionResult Encuesta(string mail)
+        public ActionResult Encuesta(string mail,int num)
         {
-            var existe = db.Encuestados.Where(x => x.mail == mail && x.Contestada == 0).FirstOrDefault();
+            var existe = db.Encuestados.Where(x => x.mail == mail && x.Id==num ).FirstOrDefault();
             var vig = db.VigenciaEnc.Where(x => x.Activo == true).FirstOrDefault();
             if (existe != null)
             {
@@ -22,7 +22,11 @@ namespace EncuestaSatisfaccion.Controllers
                 {
                     ViewBag.Vencida = 0;
                 }
-                else {
+                if (existe.Contestada == 1) {
+                    ViewBag.Vencida = 2;
+                }
+                else
+                {
                     ViewBag.Vencida = 1;
                 }
 

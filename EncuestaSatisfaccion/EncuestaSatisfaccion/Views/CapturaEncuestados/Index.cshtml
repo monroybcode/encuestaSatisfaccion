@@ -132,7 +132,10 @@
                                 @if (str2.Contestada == 1)
                                 {
                                     <button class="btn btn-starmedica btn-sm" onclick="VerResp(@str2.Id)" title="Revisar"><i class="fas fa-eye"></i></button>
-                                } </td>
+                                }
+                                <button class="btn btn-starmedica btn-sm" onclick="Mod('@str2.Id')" title="Editar"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-starmedica btn-sm" onclick="Eliminar('@str2.Id','@str2.Nombre @str2.Apa @str2.Ama')" title="Eliminar"><i class="fas fa-trash"></i></button>
+                            </td>
                             </tr>
                         }
                     </tbody>
@@ -216,6 +219,25 @@
     </div>
 </div>
 
+<div class="modal fade" id="Meliminar">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><span class="AccLib"></span> Eliminar encuestado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>¿Estás seguro de eliminar al encuestado "<span id="NomUser"></span>"?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="BtnDelUser"><span class="AccLib">Eliminar</span></button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="modal fade" id="MDelLib">
@@ -288,7 +310,24 @@
             var Datos = { "Id": Id };
             AjaxGenerico(3, "reenviar", Datos)
     }
+    function Mod(Id) {
+        var Datos = { "Id": Id };
+        AjaxGenerico(5, "Mod", Datos)
 
+    }
+    var IDdel = 0;
+    function Eliminar(Id, nom) {
+        IDdel = Id;
+        $("#NomUser").text(nom);
+        $("#Meliminar").modal("show")
+    }
+
+    $("#BtnDelUser").click(function () {
+        var An;
+        var Datos = { "Id": IDdel };
+       
+        AjaxGenerico(6, "Del", Datos)
+    })
     function gdata() {
 
         var n = $("#Fnombre").val();
@@ -392,7 +431,10 @@
                                     (dta[x]["Contestada"] == 1 ? '<button class="btn btn-starmedica-success btn-sm" DUsId="' + dta[x]["id"] + '" title="Contestada"><i class="fas fa-check-circle"></i></button>' :
                                         ' <td><button class="btn btn-starmedica-danger btn-sm " title="Sin Contestar"><i class="fas fa-times-circle"></i></button>'),
                                     (dta[x]["Contestada"] == 0 ? '<button class="btn btn-starmedica btn-sm" onclick="ReEnviar('+ dta[x]["Id"]+')" title="ReEnviar"><i class="fas fa-envelope"></i></button>' : "")+
-                                    (dta[x]["Contestada"] == 1 ?'<button class="btn btn-starmedica btn-sm" onclick="VerResp(' + dta[x]["Id"] + ')" title="Revisar"><i class="fas fa-eye"></i></button>':"")
+                                    (dta[x]["Contestada"] == 1 ? '<button class="btn btn-starmedica btn-sm" onclick="VerResp(' + dta[x]["Id"] + ')" title="Revisar"><i class="fas fa-eye"></i></button>' : "")+
+                                     '<button class="btn btn-starmedica btn-sm" onclick="Mod(' + dta[x]["Id"] + ')" title="Editar"><i class="fas fa-edit"></i></button>'+
+                                '<button class="btn btn-starmedica btn-sm" onclick="Eliminar(' + dta[x]["Id"] + ',\''+ dta[x]["Nombre"] + " " + dta[x]["Apa"] + " " + dta[x]["Ama"]+'\')" title="Eliminar"><i class="fas fa-trash"></i></button>'
+
                                 ])
 
                             }
@@ -498,6 +540,25 @@
 
                         $("#MDelLib").modal("show");
 
+                    }
+
+                    break;
+                case 5:
+                    $("#Id_Usuario").val(data.enc.Id);
+                    $("#nombre").val(data.enc.Nombre);
+                    $("#apa").val(data.enc.Apa);
+                    $("#ama").val(data.enc.Ama);
+                    $("#email").val(data.enc.mail);
+                    $("#puesto").val(data.enc.puesto);
+                    $("#dvig").val(data.enc.DiasVig);
+                    $("#ModalUsuario").modal("show");
+                    break;
+                case 6:
+                    if (data.R == 1) {
+                        gdata();
+                        $("#Meliminar").modal("hide");
+                    } else {
+                        MNotif("Existio un problema, intentelo de nuevo", "alert")
                     }
 
                     break;

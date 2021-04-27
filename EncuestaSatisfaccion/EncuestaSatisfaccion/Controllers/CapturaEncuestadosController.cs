@@ -15,7 +15,7 @@ namespace EncuestaSatisfaccion.Controllers
         // GET: CapturaEncuestados
         public ActionResult Index()
         {
-            var Enc = db.Encuestados.Where(x => x.Contestada == 0).ToList();
+            var Enc = db.Encuestados.Where(x => x.Contestada == 0 && x.Borrado==false).ToList();
             var vig = db.VigenciaEnc.Where(x => x.Activo == true).Select(x=>x.Dias).FirstOrDefault();
             ViewBag.Encuestados = Enc;
             ViewBag.vig = vig;
@@ -24,7 +24,7 @@ namespace EncuestaSatisfaccion.Controllers
 
         public ActionResult IndexP()
         {
-            var Enc = db.Encuestados.Where(x => x.Contestada == 0).ToList();
+            var Enc = db.Encuestados.Where(x => x.Contestada == 0 && x.Borrado == false).ToList();
             var vig = db.VigenciaEnc.Where(x => x.Activo == true).Select(x => x.Dias).FirstOrDefault();
             ViewBag.Encuestados = Enc;
             ViewBag.vig = vig;
@@ -37,7 +37,7 @@ namespace EncuestaSatisfaccion.Controllers
         {
             try
             {
-                var lp = db.Encuestados.Select(x=>x);
+                var lp = db.Encuestados.Where(x => x.Borrado == false).Select(x=>x);
 
                 if (n.Trim() != "")
                 {
@@ -128,6 +128,38 @@ namespace EncuestaSatisfaccion.Controllers
                 return Json(new { R = 0, e.Message });
             }
         }
+        [HttpPost]
+        public ActionResult Mod(int Id)
+        {
+            try
+            {
+                var enc = db.Encuestados.Find(Id);
+               
+
+                return Json(new { R = 1, enc });
+            }
+            catch (Exception e)
+            {
+                return Json(new { R = 0, e.Message });
+            }
+        }
+        [HttpPost]
+        public ActionResult Del(int Id)
+        {
+            try
+            {
+                var enc = db.Encuestados.Find(Id);
+                enc.Borrado = true;
+                db.Entry(enc).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Json(new { R = 1, enc });
+            }
+            catch (Exception e)
+            {
+                return Json(new { R = 0, e.Message });
+            }
+        }
 
         [HttpPost]
         public ActionResult GetRespuestas(int Id)
@@ -157,7 +189,7 @@ namespace EncuestaSatisfaccion.Controllers
                     "" +
                     "Gracias de antemano por tus valiosos comentarios.  Tu opinión será utilizada para asegurar que continuemos mejorando. ";
 
-                f.SendMail(texto, enc.mail,"" ,"Encuesta Star Medica", "");
+                f.SendMail(texto, enc.mail,"" ,"Encuesta Star Medica", enc.Id.ToString());
                 return Json(new { R = 1});
             }
             catch (Exception e) {
@@ -177,7 +209,7 @@ namespace EncuestaSatisfaccion.Controllers
                 db.SaveChanges();
                 string host = HttpContext.Request.Url.Host;
                 FuncionesGenericas f = new FuncionesGenericas();
-                await f.SendMail(enc.Nombre, enc.mail,"", host, "");
+                await f.SendMail(enc.Nombre, enc.mail,"", host, enc.Id.ToString());
                 return Json(new { R = 1 });
             }
             catch (Exception e) {
@@ -206,7 +238,7 @@ namespace EncuestaSatisfaccion.Controllers
                 FuncionesGenericas f = new FuncionesGenericas();
                 string host = HttpContext.Request.Url.Host;
 
-                await f.SendMail(enc.Nombre, enc.mail, "", host, "");
+                await f.SendMail(enc.Nombre, enc.mail, "", host, enc.Id.ToString());
                 return Json(new { R = 1, enc });
                 
                 

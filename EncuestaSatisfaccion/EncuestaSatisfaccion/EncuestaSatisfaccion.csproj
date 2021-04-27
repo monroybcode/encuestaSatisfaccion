@@ -245,6 +245,10 @@
     <Compile Include="Migrations\202104231932387_diasvig.Designer.cs">
       <DependentUpon>202104231932387_diasvig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104262123208_borrado.cs" />
+    <Compile Include="Migrations\202104262123208_borrado.Designer.cs">
+      <DependentUpon>202104262123208_borrado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -2363,6 +2367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104231932387_diasvig.resx">
       <DependentUpon>202104231932387_diasvig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104262123208_borrado.resx">
+      <DependentUpon>202104262123208_borrado.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -26,5 +26,7 @@ namespace EncuestaSatisfaccion.Models
         public int Contestada { get; set; }
         public int DiasVig { get; set; }
 
+        public bool Borrado { get; set; }
+
     }
 }

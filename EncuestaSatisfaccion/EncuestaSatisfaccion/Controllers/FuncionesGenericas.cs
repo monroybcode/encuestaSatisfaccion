@@ -92,7 +92,7 @@ namespace EncuestaSatisfaccion.Controllers
             {
                 string html = "<label style='font-size:14px;font-weight:bold;'> Hola " + Mensaje + "</label></br></br></br>" +
                        "¿Deseas contestar una breve encuesta para ayudarnos a mejorar nuestra atención? " +
-                       "<br/> <a href='https://" + Titulo + ":8082/Encuesta/Encuesta/12?mail=" + MailTo + "'> https://" + Titulo + ":8082/Encuesta/Encuesta/12?mail=" + MailTo + "<a/> <br/>" +
+                       "<br/> <a href='https://" + Titulo + ":8082/Encuesta/Encuesta/12?mail=" + MailTo + "&num='+Adjunto> https://" + Titulo + ":8082/Encuesta/Encuesta/12?mail=" + MailTo + "<a/> <br/>" +
                    "<br/><br/>Gracias de antemano por tus valiosos comentarios.";
 
 
