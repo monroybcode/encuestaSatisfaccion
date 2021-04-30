@@ -40,6 +40,7 @@ namespace EncuestaSatisfaccion.Models
 
     public class listrepo{
         public int id { get; set; }
+        public bool Eliminada { set; get; }
         public string nombre { set; get; }
         public string puesto { set; get; }
         public string contestado { set; get; }

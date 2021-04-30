@@ -18,9 +18,11 @@ namespace ControlAcceso.Controllers
         // GET: ReporteRespuestas
         public ActionResult Index()
         {
+
             var lp = db.Respuestas.Select(x => new listrepo
             {
                 id = x.IdEncuestado,
+                Eliminada = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.Borrado).FirstOrDefault(),
                 nombre = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.Nombre + " " + y.Apa + " " + y.Ama).FirstOrDefault(),
                 puesto = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.puesto).FirstOrDefault(),
                 fechaAlta = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.fechaAlta).FirstOrDefault(),
@@ -45,8 +47,9 @@ namespace ControlAcceso.Controllers
                 rp17 = x.rp17,
                 rp18 = x.rp18,
                 rp19 = x.rp19
-            }).ToList();
-            ViewBag.Respuestas = lp;
+            });
+            lp = lp.Where(x => x.Eliminada == false);
+            ViewBag.Respuestas = lp.ToList();
             return View();
         }
 
@@ -55,6 +58,7 @@ namespace ControlAcceso.Controllers
             var lp = db.Respuestas.Select(x => new listrepo
             {
                 id = x.IdEncuestado,
+                Eliminada = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.Borrado).FirstOrDefault(),
                 nombre = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.Nombre + " " + y.Apa + " " + y.Ama).FirstOrDefault(),
                 puesto = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.puesto).FirstOrDefault(),
                 fechaAlta = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.fechaAlta).FirstOrDefault(),
@@ -79,8 +83,9 @@ namespace ControlAcceso.Controllers
                 rp17 = x.rp17,
                 rp18 = x.rp18,
                 rp19 = x.rp19
-            }).ToList();
-            ViewBag.Respuestas = lp;
+            });
+            lp = lp.Where(x => x.Eliminada == false);
+            ViewBag.Respuestas = lp.ToList();
 
             return PartialView("Index");
         }
@@ -92,6 +97,7 @@ namespace ControlAcceso.Controllers
                 var lp = db.Respuestas.Select(x => new listrepo
                 {
                     id = x.IdEncuestado,
+                    Eliminada = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.Borrado).FirstOrDefault(),
                     nombre = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.Nombre + " " + y.Apa + " " + y.Ama).FirstOrDefault(),
                     puesto = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.puesto).FirstOrDefault(),
                     fechaAlta = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.fechaAlta).FirstOrDefault(),
@@ -117,7 +123,7 @@ namespace ControlAcceso.Controllers
                     rp18 = x.rp18,
                     rp19 = x.rp19
                 });
-
+                lp = lp.Where(x => x.Eliminada == false);
                 if (n.Trim() != "") {
                    lp= lp.Where(x => x.nombre.Contains(n.Trim()));
                 }
@@ -199,6 +205,7 @@ namespace ControlAcceso.Controllers
                 var lp = db.Respuestas.Select(x => new listrepo
                 {
                     id = x.IdEncuestado,
+                    Eliminada = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.Borrado).FirstOrDefault(),
                     nombre = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.Nombre + " " + y.Apa + " " + y.Ama).FirstOrDefault(),
                     puesto = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.puesto).FirstOrDefault(),
                     fechaAlta = db.Encuestados.Where(y => y.Id == x.IdEncuestado).Select(y => y.fechaAlta).FirstOrDefault(),
@@ -224,7 +231,7 @@ namespace ControlAcceso.Controllers
                     rp18 = x.rp18,
                     rp19 = x.rp19
                 });
-
+                lp = lp.Where(x => x.Eliminada == false); 
                 if (n.Trim() != "")
                 {
                     lp = lp.Where(x => x.nombre.Contains(n));

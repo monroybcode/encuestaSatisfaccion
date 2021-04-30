@@ -13,7 +13,8 @@
         background-color: white;
         margin: 15px;
         background-image: url(https://lh6.googleusercontent.com/SysF_nlZoC10qy2N1JyhkxNXCfwP6P9jCIfvpFCy_VG_1HEPb5b6nWhBYM4YrH3pZv3dGeUGCN-h3shNqcVl8lHAaMDyAKzks8_q3rkqYlG2FHgICet9QuO_QyK3mFoaQw=w1607);
-        background-size: contain;
+        background-size: 28vw;
+       
         background-position: center;
         background-repeat: no-repeat;
     }
@@ -100,6 +101,7 @@
 <body style="        background-color: #ede7f6; font-family:Helvetica Neue;">
     <div class="freebirdFormviewerViewHeaderCard freebirdFormviewerViewCenteredContent freebirdViewerHeaderCard freebirdHeaderCard">
     </div>
+    <input type="hidden" id="num" value="@ViewBag.num" />
     @if (ViewBag.mail == "")
     {
         <div class="freebirdFormviewerViewCenteredContent">
@@ -133,7 +135,8 @@
                 <div class="freebirdFormviewerViewCenteredContent">
                     <div class="divGenerico">
                         <h3 style="text-align:center;">Gracias por su tiempo</h3>
-                    </div>
+                        <h3 style="text-align:center;">Star Médica, un espacio humano</h3>
+</div>
                 </div>
             </div>
             <div id="Enc">
@@ -204,8 +207,7 @@
                                     <input type="radio" id="P3" name="P3" value="Bolsa de trabajo" />Bolsa de trabajo
                                 </div>
                                 <div class="radio">
-                                    <input type="radio" id="P3" name="P3" value="OCC" />
-                                    OCC
+                                    <input type="radio" id="P3" name="P3" value="OCC" />OCC
                                 </div>
                                 <div class="radio">
                                     <input type="radio" id="P3" name="P3" value="Linkedin" />Linkedin
@@ -225,8 +227,7 @@
                                     <input type="radio" id="P4" name="P4" value="No" />No
                                 </div>
                                 <div class="radio">
-                                    <input type="radio" id="P4" name="P4" value="Tal vez" />
-                                    Tal vez
+                                    <input type="radio" id="P4" name="P4" value="Tal vez" />Tal vez
                                 </div>
 
                             </div>
@@ -237,8 +238,8 @@
                             Primer Contacto<br />
                             <label style="font-size:12px">Primera llamada y/o entrevista con reclutador</label>
                         </div>
-
-                        <div class="pregunta">
+                        Por favor, a continuación indique su grado de satisfacción con las siguientes proposiciones, en una escala del 1 al 5, siendo (1) nada satisfecho y (5) muy satisfecho.
+                        <div class="pregunta" style="margin-top:5px;">
                             <label>
                                 Después de que te postulaste o enviaste tu información, ¿Cuánto tiempo tardamos en contactarte?<label style="color:red;">*</label>
                             </label>
@@ -362,9 +363,9 @@
                                 <div class="radio">
                                     <input type="radio" id="P9" name="P9" value="No" />No
                                 </div>
-                                <div class="radio">
+                                @*<div class="radio">
                                     <input type="radio" id="P9" name="P9" value="Si, pero con dudas" />Si, pero con dudas
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                         <div class="pregunta">
@@ -379,9 +380,9 @@
                                 <div class="radio">
                                     <input type="radio" id="P10" name="P10" value="No" />No
                                 </div>
-                                <div class="radio">
+                                @*<div class="radio">
                                     <input type="radio" id="P10" name="P10" value="Sí, pero con dudas" />Sí, pero con dudas
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>
@@ -563,7 +564,7 @@
                         </div>
                         <div class="pregunta">
                             <label>
-                                ¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?<label style="color:red;">*</label>
+                                ¿Tienes algún comentario o sugerencia adicional que nos pueda ayudar a mejorar el proceso de reclutamiento?
                             </label>
                             <div class="respuestas">
 
@@ -609,7 +610,7 @@
         if ($('input:radio[name=P16]').is(':checked') == false) { err++; }
         if ($('input:radio[name=P17]').is(':checked') == false) { err++; }
         if ($('input:radio[name=P18]').is(':checked') == false) { err++; }
-        if ($("#P19").val() == "") { err++; }
+     //   if ($("#P19").val() == "") { err++; }
         //$('input:radio[name=P2]:checked')
         if (err > 0) {
             MNotif("Debe contestar todas las preguntas", "alert");
@@ -618,6 +619,7 @@
 
             var userId = $("#Id_Usuario").val() || '0';
             var data = {
+                "num":$('#num').val(),
                 "mail": $('#mail').val(),
                 "P1": $('input:radio[name=P1]:checked').val(),
                 "P2": $('input:radio[name=P2]:checked').val(),

@@ -25,7 +25,7 @@ namespace EncuestaSatisfaccion.Controllers
                 if (existe.Contestada == 1) {
                     ViewBag.Vencida = 2;
                 }
-                else
+                if (existe.fechaAlta > d)
                 {
                     ViewBag.Vencida = 1;
                 }
@@ -36,6 +36,7 @@ namespace EncuestaSatisfaccion.Controllers
             {
                 ViewBag.mail = "";
             }
+            ViewBag.num = num;
             return PartialView("Encuesta");
         }
         
@@ -56,12 +57,12 @@ namespace EncuestaSatisfaccion.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(string mail,string P1, string P2, string P3, string P4, string P5, 
+        public ActionResult Create(int num, string mail,string P1, string P2, string P3, string P4, string P5, 
             string P6, string P7, string P8, string P9, string P10, string P11, string P12, string P13, string P14, string P15, string P16, string P17, string P18, string P19)
         {
             var resp = 0;
 
-            var existe = db.Encuestados.Where(x => x.mail == mail && x.Contestada == 0).FirstOrDefault();
+            var existe = db.Encuestados.Where(x => x.mail == mail && x.Contestada == 0 && x.Id==num).FirstOrDefault();
 
             if (existe != null)
             {

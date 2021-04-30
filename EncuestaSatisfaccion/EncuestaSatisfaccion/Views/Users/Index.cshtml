@@ -18,14 +18,18 @@
 </style>
 <div class="container-fluid">
     <div class="card card-cascade narrower">
-        <div class="card-title">
+        <div class="card-title"  style="padding-right:10px;>
             <div class="row" style="margin-top:20px;">
-                <div class="col-12" style="text-align: left; padding-left: 7px; color: #4b4e53;">
+                <div class="col-12" style="text-align: left; padding-left: 7px;margin-top: 20px; color: #4b4e53;">
                     <h3>
                         <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Administración de usuarios</span>
-                        <button type="button" class="btn btn-primary" title="Nuevo" style="float:right;" id="nuevoUser"> <i class="fas fa-user fa-1x"></i>&nbsp;Agregar usuario</button>
-                        <img style="height:49px;margin-right:20px; float:right;" src="~/Images/logo-starmedica.png" />
+
                     </h3>
+
+                    <img style="margin-top:-44px; height:49px;margin-right:-2px; float:right;" src="~/Images/logo-starmedica.png" />
+                </div>
+                <div class="col-12" style="margin-top:20px;">
+                    <button type="button" class="btn btn-primary" title="Nuevo" style="margin-top: 20px;width: 150px; float: right;" id="nuevoUser"> <i class="fas fa-user fa-1x"></i>&nbsp;Agregar usuario</button>
                 </div>
             </div>
         </div>
@@ -254,7 +258,7 @@
 <script>
 
     var ColumnD = [{ "targets": [0],  "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "20%", "targets": [2] }, { "width": "200px", "targets": [3] },{ "width": "20%", "targets": [4] }, { "width": "20%", "targets": [5] }, { "width": "30%", "targets": [6] }]
-    var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "50vh");
+    var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "60vh");
 
     TablaUsuarios
         .columns('1')

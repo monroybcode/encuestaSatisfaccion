@@ -23,8 +23,9 @@
                 <div class="col-12" style="text-align: left; padding-left: 7px; color: #4b4e53;">
                     <h3>
                         <span style="font-weight:500;font-size: 15pt;font-family:HelveticaNeue !important; letter-spacing: 2px;color:#98999a;">Administración de encuestados</span>
-                        <img style="height:49px;margin-right:20px; float:right;" src="~/Images/logo-starmedica.png" />
+
                     </h3>
+                    <img style="margin-top:-44px; height:49px;margin-right:20px; float:right;" src="~/Images/logo-starmedica.png" />
                 </div>
             </div>
         </div>
@@ -473,8 +474,12 @@
                             $("#puesto").val(),
                             ConvEFDate( data.enc.fechaAlta,"dd/MM/yyyy HH:mm:ss"),
                             BtnEstatusL,
-                            (data.enc.Contestada  == 0 ? '<button class="btn btn-starmedica btn-sm" onclick="ReEnviar(' + data.enc.Id+ ')" title="ReEnviar"><i class="fas fa-envelope"></i></button>' : "") +
-                            (data.enc.Contestada  == 1 ? '<button class="btn btn-starmedica btn-sm" onclick="VerResp(' + data.enc.Id + ')" title="Revisar"><i class="fas fa-eye"></i></button>' : "")
+                           
+                            (data.enc.Contestada == 0 ? '<button class="btn btn-starmedica btn-sm" onclick="ReEnviar(' + data.enc.Id + ')" title="ReEnviar"><i class="fas fa-envelope"></i></button>' : "") +
+                            (data.enc.Contestada == 1 ? '<button class="btn btn-starmedica btn-sm" onclick="VerResp(' + data.enc.Id + ')" title="Revisar"><i class="fas fa-eye"></i></button>' : "") +
+                            '<button class="btn btn-starmedica btn-sm" onclick="Mod(' + data.enc.Id + ')" title="Editar"><i class="fas fa-edit"></i></button>' +
+                            '<button class="btn btn-starmedica btn-sm" onclick="Eliminar(' + data.enc.Id + ',\'' + $("#nombre").val() + " " + $("#apa").val() + " " + $("#ama").val() + '\')" title="Eliminar"><i class="fas fa-trash"></i></button>'
+
                                ];
                         UpdateTableRow(rData, data.Id, TablaUsuarios, "TablaUsuarios")
                         $("#ModalUsuario").modal("hide")
