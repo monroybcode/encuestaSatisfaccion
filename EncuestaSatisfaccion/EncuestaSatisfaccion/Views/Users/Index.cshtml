@@ -18,7 +18,7 @@
 </style>
 <div class="container-fluid">
     <div class="card card-cascade narrower">
-        <div class="card-title"  style="padding-right:10px;>
+        <div class="card-title" style="padding-right:10px;>
             <div class="row" style="margin-top:20px;">
                 <div class="col-12" style="text-align: left; padding-left: 7px;margin-top: 20px; color: #4b4e53;">
                     <h3>
@@ -35,7 +35,7 @@
         </div>
         <div class="row">
             <div class="col-12" style="padding-top:10px">
-                <table id="TablaUsuarios" class="table table-striped" style="width:100%">
+                <table id="TablaU" class="table table-striped" style="width:100%">
                     <thead class="LTT12B">
                         <tr>
                             <th>Id</th>
@@ -64,7 +64,8 @@
                                 {
                                     <td><button class="btn btn-starmedica-danger btn-sm " onclick="ActUser('@str2.Id')" title="Activar"><i class="fas fa-times-circle"></i></button></td>
                                 }
-                                <td><button class="btn btn-starmedica btn-sm" onclick="ModUser('@str2.Id')" title="Editar"><i class="fas fa-edit"></i></button>
+                                <td>
+                                    <button class="btn btn-starmedica btn-sm" onclick="ModUser('@str2.Id')" title="Editar"><i class="fas fa-edit"></i></button>
                                     @*<button class="btn btn-starmedica btn-sm" onclick="ResetPas('@str2.Id')" title="Cambiar contraseña"><i class="fas fa-exchange-alt"></i></button>*@
                                 </td>
                             </tr>
@@ -122,17 +123,17 @@
                                 </div>
                             </div>
                             @*<div class="form-group row">
-                                <div class="col-4" style="text-align:left"><label class="form-control-label">Password</label></div>
-                                <div class="col-8">
-                                    <input type="password" class="form-control" id="Pass" style="height:24px;" maxlength="100" />
+                                    <div class="col-4" style="text-align:left"><label class="form-control-label">Password</label></div>
+                                    <div class="col-8">
+                                        <input type="password" class="form-control" id="Pass" style="height:24px;" maxlength="100" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-4" style="text-align:left"><label class="form-control-label">Confirmar Password</label></div>
-                                <div class="col-8">
-                                    <input type="password" class="form-control" id="CPass" style="height:24px;" maxlength="100" />
-                                </div>
-                            </div>*@
+                                <div class="form-group row">
+                                    <div class="col-4" style="text-align:left"><label class="form-control-label">Confirmar Password</label></div>
+                                    <div class="col-8">
+                                        <input type="password" class="form-control" id="CPass" style="height:24px;" maxlength="100" />
+                                    </div>
+                                </div>*@
                             <div class="form-group row">
                                 <div class="col-4" style="text-align:left"><label class="control-label">Rol</label></div>
                                 <div class="col-8">
@@ -186,7 +187,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos del usuario</a>
                     </li>
-                   
+
                 </ul>
                 <div id="formUsuarios">
                     <div class="tab-content" id="myTabContent">
@@ -221,9 +222,9 @@
                                     <input type="password" class="form-control" id="CPassC" style="height:24px;" maxlength="100" />
                                 </div>
                             </div>
-                           
+
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -257,18 +258,22 @@
 
 <script>
 
-    var ColumnD = [{ "targets": [0],  "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "20%", "targets": [2] }, { "width": "200px", "targets": [3] },{ "width": "20%", "targets": [4] }, { "width": "20%", "targets": [5] }, { "width": "30%", "targets": [6] }]
-    var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "60vh");
+    var ColumnD = [{ "targets": [0], "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "20%", "targets": [2] }, { "width": "200px", "targets": [3] }, { "width": "20%", "targets": [4] }, { "width": "20%", "targets": [5] }, { "width": "30%", "targets": [6] }]
+    var TablaU = DatatableInitialize("#TablaU", ColumnD, "60vh");
 
-    TablaUsuarios
+    TablaU
         .columns('1')
         .order('asc')
         .draw();
 
+
+
+
+
     history.pushState('', '', '/Users/Index');
 
     //var ColumnD = [{ "targets": [0], "visible": false, "searchable": false }, { "width": "20%", "targets": [1] }, { "width": "30%", "targets": [2] }, { "width": "30%", "targets": [3] }, { "width": "10%", "targets": [4] }, { "width": "10%", "targets": [5] }]
-    //var TablaUsuarios = DatatableInitialize("#TablaUsuarios", ColumnD, "50vh");
+    //var TablaU = DatatableInitialize("#TablaU", ColumnD, "50vh");
     var UsrIdC = 0;
     var StaUsr;
     $("#nuevoUser").click(function () {
@@ -280,8 +285,8 @@
 
     function DelUser(UsrId) {
         UsrIdC = UsrId;
-        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrId, 0);
-        var Datos = TablaUsuarios.row(rowId).data()
+        var rowId = $('#TablaU').dataTable().fnFindCellRowIndexes(UsrId, 0);
+        var Datos = TablaU.row(rowId).data()
         $("#NomUser").text(Datos[1])
         $(".AccLib").text("Desactivar")
         $(".AccLib2").text("desactivar")
@@ -292,8 +297,8 @@
 
     function ActUser(UsrId) {
         UsrIdC = UsrId;
-        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrId, 0);
-        var Datos = TablaUsuarios.row(rowId).data(); $("#NomUser").text(Datos[1]);
+        var rowId = $('#TablaU').dataTable().fnFindCellRowIndexes(UsrId, 0);
+        var Datos = TablaU.row(rowId).data(); $("#NomUser").text(Datos[1]);
         $(".AccLib").text("Activar"); $(".AccLib2").text("activar");
         $("#BtnDelUser").removeClass("btn-danger").addClass("btn-primary");
         StaUsr = true; $("#MDelLib").modal("show");
@@ -349,7 +354,7 @@
                 "Email": $("#email").val(),
                 "RoleId": $("#Roles").val(),
                 "CeSa": datos,
-              //  "Contraseña": $("#Pass").val(),
+                //  "Contraseña": $("#Pass").val(),
                 //"Grupos": datos3
             }
 
@@ -366,7 +371,7 @@
 
                 }
             } else {
-                 MNotif("Correo electrónico inválido", "info")
+                MNotif("Correo electrónico inválido", "info")
             }
         }
     }
@@ -377,25 +382,25 @@
     }
 
     function ActualizarPass() {
-    
+
         if ($("#PassC").val() != $("#CPassC").val()) {
             $("#PassC").focus();
             MNotif("El password y su confirmación deben ser iguales.", "info");
             return;
         }
-   
-            var userId = $("#Id_UsuarioC").val() || '0';
-            var data = {
-                "Id": userId,
-                "Contraseña": $("#PassC").val(),
-            }
 
-             AjaxGenerico(5, "ResetPass", data)
+        var userId = $("#Id_UsuarioC").val() || '0';
+        var data = {
+            "Id": userId,
+            "Contraseña": $("#PassC").val(),
+        }
+
+        AjaxGenerico(5, "ResetPass", data)
     }
 
     function ResetPas(usID) {
-        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(usID, 0);
-        var Datos = TablaUsuarios.row(rowId).data();
+        var rowId = $('#TablaU').dataTable().fnFindCellRowIndexes(usID, 0);
+        var Datos = TablaU.row(rowId).data();
 
         $("#Id_UsuarioC").val(Datos[0]);
         $("#nomcomC").val(Datos[2]);
@@ -412,34 +417,34 @@
                         $("#Pass").focus();
                     }
                     else
-                    if (data.R == 0) {
-                        MNotif("Ya existe un registro con el nombre de usuario o email proporcionado", "alert")
-                    }
-                    else {
-                        var BtnEstatusL = "";
-                        var usir = "'" + data.Id + "'"
-                        if (data.Est == true) {
-                            BtnEstatusL = '<td><button class="btn btn-starmedica-success btn-sm"  onclick="DelUser(' + usir +')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>'
+                        if (data.R == 0) {
+                            MNotif("Ya existe un registro con el nombre de usuario o email proporcionado", "alert")
                         }
                         else {
-                            BtnEstatusL = '<td><button class="btn btn-starmedica-danger btn-sm" onclick="ActUser(' + usir +')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>'
+                            var BtnEstatusL = "";
+                            var usir = "'" + data.Id + "'"
+                            if (data.Est == true) {
+                                BtnEstatusL = '<td><button class="btn btn-starmedica-success btn-sm"  onclick="DelUser(' + usir + ')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>'
+                            }
+                            else {
+                                BtnEstatusL = '<td><button class="btn btn-starmedica-danger btn-sm" onclick="ActUser(' + usir + ')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>'
+                            }
+                            var rowId = $('#TablaU').dataTable().fnFindCellRowIndexes(data.Id, 0);
+                            var Datos = TablaU.row(rowId).data()
+                            var rData = [
+                                data.Id,
+                                $("#username").val(),
+                                $("#nomcom").val(),
+                                $("#email").val(),
+                                $("#Roles option:selected").text(),
+                                BtnEstatusL,
+                                '<button class="btn btn-starmedica btn-sm " onclick="ModUser(' + usir + ')"  title="Editar"><i class="fas fa-edit"></i></button>'
+                            ];
+                            UpdateTableRow(rData, data.Id, TablaU, "TablaU")
+                            $("#ModalUsuario").modal("hide")
+                            MNotif("Datos guardados", "success")
+                            LimpiarInputDiv("formUsuarios");
                         }
-                        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(data.Id, 0);
-                        var Datos = TablaUsuarios.row(rowId).data()
-                        var rData = [
-                            data.Id,
-                            $("#username").val(),
-                            $("#nomcom").val(),
-                            $("#email").val(),
-                            $("#Roles option:selected").text(),
-                            BtnEstatusL,
-                            '<button class="btn btn-starmedica btn-sm " onclick="ModUser(' + usir + ')"  title="Editar"><i class="fas fa-edit"></i></button>'
-                        ];
-                        UpdateTableRow(rData, data.Id, TablaUsuarios, "TablaUsuarios")
-                        $("#ModalUsuario").modal("hide")
-                        MNotif("Datos guardados", "success")
-                        LimpiarInputDiv("formUsuarios");
-                    }
                     break;
                 case 2:
                     $("#ModalUsuario").data('data-title', "Modificar usuario");
@@ -460,8 +465,8 @@
                         MNotif("Ocurrio un error al desactivar el usuario", "alert")
                     }
                     else {
-                        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrIdC, 0);
-                        var Datos = TablaUsuarios.row(rowId).data()
+                        var rowId = $('#TablaU').dataTable().fnFindCellRowIndexes(UsrIdC, 0);
+                        var Datos = TablaU.row(rowId).data()
                         var usir = "'" + UsrIdC + "'";
                         var rData = [
                             UsrIdC,
@@ -469,10 +474,10 @@
                             Datos[2],
                             Datos[3],
                             Datos[4],
-                            '<td><button class="btn btn-starmedica-success btn-sm"  onclick="DelUser(' + usir +')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>',
-                            '<button class="btn btn-starmedica btn-sm "  onclick="ModUser(' + usir +')"  title="Editar"><i class="fas fa-edit"></i></button>'
+                            '<td><button class="btn btn-starmedica-success btn-sm"  onclick="DelUser(' + usir + ')"  title="Desactivar"><i class="fas fa-check-circle"></i></button></td>',
+                            '<button class="btn btn-starmedica btn-sm "  onclick="ModUser(' + usir + ')"  title="Editar"><i class="fas fa-edit"></i></button>'
                         ];
-                        UpdateTableRow(rData, UsrIdC, TablaUsuarios, "TablaUsuarios")
+                        UpdateTableRow(rData, UsrIdC, TablaU, "TablaU")
                         $("#MDelLib").modal("hide")
                         MNotif("Datos guardados", "success")
                         LimpiarInputDiv("formUsuarios");
@@ -481,19 +486,19 @@
                 case 4:
 
                     if (data.R > 0) {
-                        var rowId = $('#TablaUsuarios').dataTable().fnFindCellRowIndexes(UsrIdC, 0);
-                        var Datos = TablaUsuarios.row(rowId).data()
+                        var rowId = $('#TablaU').dataTable().fnFindCellRowIndexes(UsrIdC, 0);
+                        var Datos = TablaU.row(rowId).data()
                         var usir = "'" + UsrIdC + "'";
                         var rData = [
                             UsrIdC,
                             Datos[1],
                             Datos[2],
                             Datos[3],
-                             Datos[4],
-                            '<td><button class="btn btn-starmedica-danger btn-sm"  onclick="ActUser(' + usir +')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>',
-                            '<button class="btn btn-starmedica btn-sm "  onclick="ModUser(' + usir +')"  title="Editar"><i class="fas fa-edit"></i></button>'
+                            Datos[4],
+                            '<td><button class="btn btn-starmedica-danger btn-sm"  onclick="ActUser(' + usir + ')"  title="Activar"><i class="fas fa-times-circle"></i></button></td>',
+                            '<button class="btn btn-starmedica btn-sm "  onclick="ModUser(' + usir + ')"  title="Editar"><i class="fas fa-edit"></i></button>'
                         ];
-                        UpdateTableRow(rData, UsrIdC, TablaUsuarios, "TablaUsuarios")
+                        UpdateTableRow(rData, UsrIdC, TablaU, "TablaU")
                         $("#MDelLib").modal("hide");
                         MNotif("Datos guardados", "success")
                         LimpiarInputDiv("formUsuarios");

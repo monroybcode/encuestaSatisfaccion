@@ -73,7 +73,7 @@
     @Scripts.Render("~/bundles/Scripts")
     <script src="~/Scripts/FunctionsJS.js?1.12"></script>
     <script src="~/Scripts/SiteJS.js?V=11"></script>
-    <script src="~/Scripts/Autocomplete.js"></script>
+   <script src="~/Scripts/Autocomplete.js"></script>
     @RenderSection("scripts", required: false)
 
 </head>
@@ -361,27 +361,7 @@
     }
 
 
-    function AbrirTic() {
-        $.ajax({
-            url: '/LoginBiomedica/LoginTicket',
-            type: "POST",
-
-            success: function (data) {
-
-                if (data.res = "true") {
-
-                    window.open(data.redirect, '_blank');
-                } else {
-                    MNotif("Ocurrió un error al hacer la petición al servidor", "error")
-                }
-            }, error: function (xhr, type, error) {
-
-                MNotif("Ocurrió un error al hacer la petición al servidor, --:" + xhr, "error")
-
-            }
-        });
-
-    }
+    
 
 
     $('#MMenu, #AsideMenu').on('click', function () {

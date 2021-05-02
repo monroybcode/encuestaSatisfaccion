@@ -1,7 +1,7 @@
 ﻿
- /* /
- *variables constantes para iconos de  tipo de archivos
- */
+/* /
+*variables constantes para iconos de  tipo de archivos
+*/
 var pdf = '<span style="color:#c36a62"><i style="font-size: 18px;" class="fas fa-file-pdf"></i></span>', excel = '<span style="color:green"><i style="font-size: 18px;" class="fas fa-file-excel"></i></span>', rar = '<span style="color:#008aad"><i  style="font-size: 18px;" class="fas fa-file-archive"></i></span>';
 function fileimg(ext) {
     if (ext.toUpperCase() == "PDF") {
@@ -94,14 +94,14 @@ function ValidaDivInputs(e) {
                 if ("" != $(t[i]).val() && $(t[i]).val() || $(t[i]).prop('disabled'))
                     $(t[i]).hasClass("is-invalid") && $(t[i]).removeClass("is-invalid"), $("#InputInvalid" + $(t[i]).attr("id")).length > 0 && $("#InputInvalid" + $(t[i]).attr("id")).remove();
                 else {
-                    var n = $(t[i]).parent(); $(t[i]).hasClass("is-invalid") || $(t[i]).addClass("is-invalid"), 0 == $("#InputInvalid" + $(t[i]).attr("id")).length && n.append('<div class="invalid-feedback" id="InputInvalid' + $(t[i]).attr("id") + '">* Campo requerido</div>'), 0 == a && $(t[i]).focus(), a++ , inp.push(t[i])
-                } 
+                    var n = $(t[i]).parent(); $(t[i]).hasClass("is-invalid") || $(t[i]).addClass("is-invalid"), 0 == $("#InputInvalid" + $(t[i]).attr("id")).length && n.append('<div class="invalid-feedback" id="InputInvalid' + $(t[i]).attr("id") + '">* Campo requerido</div>'), 0 == a && $(t[i]).focus(), a++, inp.push(t[i])
+                }
             else if ("select-multiple" == r || "select-one" == r)
                 if ($(t[i]).val() != "" && $(t[i]).val() && $(t[i]).val() != "0" || $(t[i]).prop('disabled')) {
                     o = (n = $(t[i]).parent()).children(), s = $(o[2]).children().children(); $(s).css("border", ""), $("#InputInvalid" + $(t[i]).attr("id")).length > 0 && $("#InputInvalid" + $(t[i]).attr("id")).remove()
                 }
                 else {
-                    var o = (n = $(t[i]).parent()).children(), s = $(o[2]).children().children(); $(s).css("border", "1px solid #f86c6b"), 0 == $("#InputInvalid" + $(t[i]).attr("id")).length && n.append('<div class="invalid-feedback" id="InputInvalid' + $(t[i]).attr("id") + '">* Campo requerido</div>'), 0 == a && $(t[i]).focus(), a++ , inp.push(t[i])
+                    var o = (n = $(t[i]).parent()).children(), s = $(o[2]).children().children(); $(s).css("border", "1px solid #f86c6b"), 0 == $("#InputInvalid" + $(t[i]).attr("id")).length && n.append('<div class="invalid-feedback" id="InputInvalid' + $(t[i]).attr("id") + '">* Campo requerido</div>'), 0 == a && $(t[i]).focus(), a++, inp.push(t[i])
                 } else "dfile" == r && alert("here")
     } return { a, inp }
 } function OCEst(e) { switch (e) { case 1: return "#346094"; case 2: return "#9ad058"; case 3: return "#FF3300"; case 4: return "#666666"; default: return "#FFFFFF" } } function ObtenerPorcen(e) { try { return (e = parseFloat(e)).toFixed(2) } catch (e) { return 0 } } function LlenarSelect(e, a) { var t = $("#" + a); t.empty(), $.each(e, function (a) { t.append($("<option />").val(e[a].Id).text(e[a].Valor)) }) } function LlenarSelectName(e, a, t) { var r = $("#" + a); r.empty(), "" != t && r.append($("<option />").val(0).text(t)), $.each(e, function (a) { r.append($("<option />").val(e[a].Id).text(e[a].Name)) }) } function LlenarSelectOE(e, a, t) { var r = $("#" + a); r.empty(), r.append($("<option />").val(t[0].Id).text(t[0].Valor)), $.each(e, function (a) { r.append($("<option />").val(e[a].Id).text(e[a].Valor)) }) } function LlenarSelectN(e, a) { var t = $("#" + a); t.empty(), $.each(e, function (a) { t.append($("<option />").val(e[a].Valor).text(e[a].Valor)) }) } function ObtenerDiferencia(e) { e = ConvEFDate(e, "yyyy-MM-dd HH:mm:ss"); var a = Math.abs(new Date(e) - new Date) / 1e3, t = Math.floor(a / 86400); a -= 86400 * t; var r = Math.floor(a / 3600) % 24; a -= 3600 * r; var n = Math.floor(a / 60) % 60, i = (a -= 60 * n, ""); return t > 0 && (i += t + " dias "), r > 0 && (i += r + " horas "), n > 0 && (i += n + " minutos "), i ? i = "Hace " + i : i += "Hace un momento", i }
@@ -109,8 +109,7 @@ function ValidaDivInputs(e) {
 function ConvertSeconds(e) {
     try {
         var a = parseInt(e, 10);
-        if ($.isNumeric(a) && a > 0)
-        {
+        if ($.isNumeric(a) && a > 0) {
             var t = Math.floor(a / 86400);
             a -= 86400 * t;//* 24;
             var r = Math.floor(a / 3600);
@@ -138,7 +137,40 @@ function DatatableInitializeES(e, a, t, r) {
                 }
             }, buttons: [], columnDefs: a, scrollY: t, autoWidth: !1, scrollX: r, dom: "<'ui grid'<'row'<'col-6'l><'col-5'f><'col-1'B>><'row dt-table'<'col-12'tr>><'row'<'col-6'i><'col-6'p>>>"
         })
-} function DatatableInitialize(e, a, t) { if (!$.fn.DataTable.isDataTable(e)) var r = $(e).DataTable({scrollCollapse:true ,language: { sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros", sZeroRecords: "No se encontraron resultados", sEmptyTable: "Ningún dato disponible en esta tabla", sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros", sInfoFiltered: "(filtrado de un total de _MAX_ registros)", sInfoPostFix: "", sSearch: "Buscar:", sUrl: "", sInfoThousands: ",", sLoadingRecords: "Cargando...", oPaginate: { sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior" }, responsive: !0, oAria: { sSortAscending: ": Activar para ordenar la columna de manera ascendente", sSortDescending: ": Activar para ordenar la columna de manera descendente" } }, columnDefs: a, scrollY: t, autoWidth: !0, scrollX: !0 }); return r } function DatatableInitialize3(e, a, t) { if (!$.fn.DataTable.isDataTable(e)) var r = $(e).DataTable({ language: { sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros", sZeroRecords: "No se encontraron resultados", sEmptyTable: "Ningún dato disponible en esta tabla", sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros", sInfoFiltered: "(filtrado de un total de _MAX_ registros)", sInfoPostFix: "", sSearch: "Buscar:", sUrl: "", sInfoThousands: ",", sLoadingRecords: "Cargando...", oPaginate: { sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior" }, oAria: { sSortAscending: ": Activar para ordenar la columna de manera ascendente", sSortDescending: ": Activar para ordenar la columna de manera descendente" } }, columnDefs: a, responsive: !0, scrollY: t, autoWidth: !1, scrollX: !0, bFilter: !1, bInfo: !1, scrollCollapse: !0 }); return r } function OnlyTableInitialize(e, a, t) { if (!$.fn.DataTable.isDataTable(e)) var r = $(e).DataTable({ language: { sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros", sZeroRecords: "No se encontraron resultados", sEmptyTable: "Ningún dato disponible en esta tabla", sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros", sInfoFiltered: "(filtrado de un total de _MAX_ registros)", sInfoPostFix: "", sSearch: "Buscar:", sUrl: "", sInfoThousands: ",", sLoadingRecords: "Cargando...", oPaginate: { sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior" }, oAria: { sSortAscending: ": Activar para ordenar la columna de manera ascendente", sSortDescending: ": Activar para ordenar la columna de manera descendente" } }, columnDefs: a, scrollY: t, autoWidth: !1, scrollX: !0, dom: "t" }); return r } function filename(e) { return ((e = e.substring(e.lastIndexOf("/") + 1)).match(/[^.]+(\.[^?#]+)?/) || [])[0] } function ReAcomodarF1(e, a, t) { if (e) { var r = new Date(e + " 00:00:00"), n = r.getDate(), i = r.getMonth() + 1, o = r.getFullYear(); return ("0" + n).slice(-2) + t + ("0" + i).slice(-2) + t + o } return "" } function ReAcomodarF2(e, a) { var t = e.getDate(), r = e.getMonth() + 1; return e.getFullYear() + a + ("0" + r).slice(-2) + a + ("0" + t).slice(-2) } function ReAcomodarF3(e, a) { var t = e.getDate(), r = e.getMonth() + 1, n = e.getFullYear(); return ("0" + t).slice(-2) + a + ("0" + r).slice(-2) + a + n } function addDays(e, a) { return new Date(e.getFullYear(), e.getMonth(), e.getDate() + a, e.getHours(), e.getMinutes(), e.getSeconds()) } function convertHoras(e, a) { return e < 10 && (e = "0" + e), a < 10 && (a = "0" + a), e + ":" + a }
+}
+function DatatableInitialize(e, a, t) {
+    if (!$.fn.DataTable.isDataTable(e))
+        var r = $(e).DataTable({
+            scrollCollapse: true,
+            initComplete: function () {
+                $(this.api().table().container()).find('input[type="search"]').parent().wrap('<form>').parent().attr('autocomplete', 'off').css('overflow', 'hidden').css('margin', 'auto');
+            },
+            language: {
+                sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros",
+                sZeroRecords: "No se encontraron resultados",
+                sEmptyTable: "Ningún dato disponible en esta tabla",
+                sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sInfoPostFix: "", sSearch: "Buscar:", sUrl: "", sInfoThousands: ",",
+                sLoadingRecords: "Cargando...",
+                oPaginate: { sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior" },
+                responsive: !0,
+                oAria: {
+                    sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sSortDescending: ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            columnDefs: a, scrollY: t, autoWidth: !0, scrollX: !0
+        },
+
+
+        );
+
+    return r
+}
+
+function DatatableInitialize3(e, a, t) { if (!$.fn.DataTable.isDataTable(e)) var r = $(e).DataTable({ language: { sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros", sZeroRecords: "No se encontraron resultados", sEmptyTable: "Ningún dato disponible en esta tabla", sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros", sInfoFiltered: "(filtrado de un total de _MAX_ registros)", sInfoPostFix: "", sSearch: "Buscar:", sUrl: "", sInfoThousands: ",", sLoadingRecords: "Cargando...", oPaginate: { sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior" }, oAria: { sSortAscending: ": Activar para ordenar la columna de manera ascendente", sSortDescending: ": Activar para ordenar la columna de manera descendente" } }, columnDefs: a, responsive: !0, scrollY: t, autoWidth: !1, scrollX: !0, bFilter: !1, bInfo: !1, scrollCollapse: !0 }); return r } function OnlyTableInitialize(e, a, t) { if (!$.fn.DataTable.isDataTable(e)) var r = $(e).DataTable({ language: { sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros", sZeroRecords: "No se encontraron resultados", sEmptyTable: "Ningún dato disponible en esta tabla", sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros", sInfoFiltered: "(filtrado de un total de _MAX_ registros)", sInfoPostFix: "", sSearch: "Buscar:", sUrl: "", sInfoThousands: ",", sLoadingRecords: "Cargando...", oPaginate: { sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior" }, oAria: { sSortAscending: ": Activar para ordenar la columna de manera ascendente", sSortDescending: ": Activar para ordenar la columna de manera descendente" } }, columnDefs: a, scrollY: t, autoWidth: !1, scrollX: !0, dom: "t" }); return r } function filename(e) { return ((e = e.substring(e.lastIndexOf("/") + 1)).match(/[^.]+(\.[^?#]+)?/) || [])[0] } function ReAcomodarF1(e, a, t) { if (e) { var r = new Date(e + " 00:00:00"), n = r.getDate(), i = r.getMonth() + 1, o = r.getFullYear(); return ("0" + n).slice(-2) + t + ("0" + i).slice(-2) + t + o } return "" } function ReAcomodarF2(e, a) { var t = e.getDate(), r = e.getMonth() + 1; return e.getFullYear() + a + ("0" + r).slice(-2) + a + ("0" + t).slice(-2) } function ReAcomodarF3(e, a) { var t = e.getDate(), r = e.getMonth() + 1, n = e.getFullYear(); return ("0" + t).slice(-2) + a + ("0" + r).slice(-2) + a + n } function addDays(e, a) { return new Date(e.getFullYear(), e.getMonth(), e.getDate() + a, e.getHours(), e.getMinutes(), e.getSeconds()) } function convertHoras(e, a) { return e < 10 && (e = "0" + e), a < 10 && (a = "0" + a), e + ":" + a }
 
 function DatatableInitializeCB(ITable, ColumnD, HE) {
     if (!$.fn.DataTable.isDataTable(ITable)) {
@@ -178,11 +210,10 @@ function DatatableInitializeCB(ITable, ColumnD, HE) {
 
     return NewDatatable;
 }
-function EmailValido(e) { 
+function EmailValido(e) {
     return new RegExp(/^[^<>()[\]\\,;:\%#^\s@\"$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/).test(e)
-} function getAge(e) { var a = new Date, t = new Date(e), r = a.getFullYear() - t.getFullYear(), n = a.getMonth() - t.getMonth(); return (n < 0 || 0 === n && a.getDate() < t.getDate()) && r-- , r } function FunKeyDown(e, a) { var t; t = e.key; var r = e.keyCode; if (37 != r && 39 != r && 38 != r && 40 != r && 9 != r && 17 != r && 18 != r && 20 != r && 16 != r && 8 != r && 46 != r && 219 != r) { var n = "", i = ""; switch (a) { case 0: n = "^[a-zA-Z,.\\s]*$", i = /^[\u00C0-\u00FF]+$/; break; case 1: n = "^[a-zA-Z.\\s]*$", i = /^[\u00C0-\u00FF]+$/; break; case 2: n = "^[a-zA-Z.,?¡¿!1-9\\s[]]*$", i = /^[\u00C0-\u00FF]+$/; break; case 3: n = "^[a-zA-Z1-9\\s]*$", i = /^[\u00C0-\u00FF]+$/; break; case 4: n = "^[a-zA-Z0-9\\s _]*$", i = /^[\u00C0-\u00FF]+$/; break; case 5: n = "^[a-zA-Z]*$", i = /^[\u00C0-\u00FF]+$/ }return !(!t.match(i) && !t.match(n)) } return !0 } function FunKeyUp(e, a) { var t = ""; switch (a) { case 0: t = /[&\/\\#+()$~%'":*?<>{}'""0-9-´´@☺^]/g; break; case 1: t = /[<>]/g; break; case 2: t = /^(.)(.*)(.@.*)$/; case 3: t = /[&\/\\#+()$~%'":*?<>{}'""'@¬\^`~´´.,-]/g }if (0 == a) { var r = $(e).val().replace(/[^a-zA-Z áéíóúÁÉÍÓÚ]/g, ""); $(e).val(r) } var n = $(e).val(); n = n.replace(t, ""), 0 == a || 1 == a ? $(e).val(MayuscFL(n)) : 3 == a ? $(e).val(n.toUpperCase()) : $(e).val(n.toLowerCase()) } function MayuscFL(e) { return e.charAt(0).toUpperCase() + e.slice(1) } function AMPM(e) { var a = e.split(":"), t = a[0] + a[1], r = t[0] + t[1], n = t[2] + t[3]; return r < 12 ? r + ":" + n + " AM" : (r = (r -= 12).length < 10 ? "0" + r : r) + ":" + n + " PM" } function TableAdjust(e) { setTimeout(function () { e.columns.adjust().responsive.recalc() }, 230) } function Load(e) { 0 == e ? $("#DivLoader").show() : $("#DivLoader").hide() } function formatMoney(e, a, t, r) { a = isNaN(a = Math.abs(a)) ? 2 : a, t = null == t ? "." : t, r = null == r ? "," : r; var n = e < 0 ? "-" : "", i = String(parseInt(e = Math.abs(Number(e) || 0).toFixed(a))), o = (o = i.length) > 3 ? o % 3 : 0; return n + (o ? i.substr(0, o) + r : "") + i.substr(o).replace(/(\d{3})(?=\d)/g, "$1" + r) + (a ? t + Math.abs(e - i).toFixed(a).slice(2) : "") } function MoneyFor(e) { return e = parseFloat(e), isNaN(e) ? 0 : e.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } function ReordenarFechaMex(e) { var a = ""; e && (a = ("0" + (e = e.split("-"))[0]).slice(-2) + "/" + ("0" + e[1]).slice(-2) + "/" + e[2]); return a } function DatatableInitialize2(e, a, t) { if (!$.fn.DataTable.isDataTable(e)) var r = $(e).DataTable({ language: { sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros", sZeroRecords: "No se encontraron resultados", sEmptyTable: "Ningún dato disponible en esta tabla", sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros", sInfoFiltered: "(filtrado de un total de _MAX_ registros)", sInfoPostFix: "", sUrl: "", sInfoThousands: ",", sLoadingRecords: "Cargando..." }, columnDefs: a, responsive: !0, scrollY: t, autoWidth: !1, scrollX: !0, searching: !1, paging: !1, info: !1 }); return r }
-function DatatableInitialize3(e, a, t)
-{
+} function getAge(e) { var a = new Date, t = new Date(e), r = a.getFullYear() - t.getFullYear(), n = a.getMonth() - t.getMonth(); return (n < 0 || 0 === n && a.getDate() < t.getDate()) && r--, r } function FunKeyDown(e, a) { var t; t = e.key; var r = e.keyCode; if (37 != r && 39 != r && 38 != r && 40 != r && 9 != r && 17 != r && 18 != r && 20 != r && 16 != r && 8 != r && 46 != r && 219 != r) { var n = "", i = ""; switch (a) { case 0: n = "^[a-zA-Z,.\\s]*$", i = /^[\u00C0-\u00FF]+$/; break; case 1: n = "^[a-zA-Z.\\s]*$", i = /^[\u00C0-\u00FF]+$/; break; case 2: n = "^[a-zA-Z.,?¡¿!1-9\\s[]]*$", i = /^[\u00C0-\u00FF]+$/; break; case 3: n = "^[a-zA-Z1-9\\s]*$", i = /^[\u00C0-\u00FF]+$/; break; case 4: n = "^[a-zA-Z0-9\\s _]*$", i = /^[\u00C0-\u00FF]+$/; break; case 5: n = "^[a-zA-Z]*$", i = /^[\u00C0-\u00FF]+$/ }return !(!t.match(i) && !t.match(n)) } return !0 } function FunKeyUp(e, a) { var t = ""; switch (a) { case 0: t = /[&\/\\#+()$~%'":*?<>{}'""0-9-´´@☺^]/g; break; case 1: t = /[<>]/g; break; case 2: t = /^(.)(.*)(.@.*)$/; case 3: t = /[&\/\\#+()$~%'":*?<>{}'""'@¬\^`~´´.,-]/g }if (0 == a) { var r = $(e).val().replace(/[^a-zA-Z áéíóúÁÉÍÓÚ]/g, ""); $(e).val(r) } var n = $(e).val(); n = n.replace(t, ""), 0 == a || 1 == a ? $(e).val(MayuscFL(n)) : 3 == a ? $(e).val(n.toUpperCase()) : $(e).val(n.toLowerCase()) } function MayuscFL(e) { return e.charAt(0).toUpperCase() + e.slice(1) } function AMPM(e) { var a = e.split(":"), t = a[0] + a[1], r = t[0] + t[1], n = t[2] + t[3]; return r < 12 ? r + ":" + n + " AM" : (r = (r -= 12).length < 10 ? "0" + r : r) + ":" + n + " PM" } function TableAdjust(e) { setTimeout(function () { e.columns.adjust().responsive.recalc() }, 230) } function Load(e) { 0 == e ? $("#DivLoader").show() : $("#DivLoader").hide() } function formatMoney(e, a, t, r) { a = isNaN(a = Math.abs(a)) ? 2 : a, t = null == t ? "." : t, r = null == r ? "," : r; var n = e < 0 ? "-" : "", i = String(parseInt(e = Math.abs(Number(e) || 0).toFixed(a))), o = (o = i.length) > 3 ? o % 3 : 0; return n + (o ? i.substr(0, o) + r : "") + i.substr(o).replace(/(\d{3})(?=\d)/g, "$1" + r) + (a ? t + Math.abs(e - i).toFixed(a).slice(2) : "") } function MoneyFor(e) { return e = parseFloat(e), isNaN(e) ? 0 : e.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } function ReordenarFechaMex(e) { var a = ""; e && (a = ("0" + (e = e.split("-"))[0]).slice(-2) + "/" + ("0" + e[1]).slice(-2) + "/" + e[2]); return a } function DatatableInitialize2(e, a, t) { if (!$.fn.DataTable.isDataTable(e)) var r = $(e).DataTable({ language: { sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros", sZeroRecords: "No se encontraron resultados", sEmptyTable: "Ningún dato disponible en esta tabla", sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros", sInfoFiltered: "(filtrado de un total de _MAX_ registros)", sInfoPostFix: "", sUrl: "", sInfoThousands: ",", sLoadingRecords: "Cargando..." }, columnDefs: a, responsive: !0, scrollY: t, autoWidth: !1, scrollX: !0, searching: !1, paging: !1, info: !1 }); return r }
+function DatatableInitialize3(e, a, t) {
     if (!$.fn.DataTable.isDataTable(e))
         var r = $(e).DataTable({
             language: {
@@ -274,65 +305,65 @@ function DatatableInitializePrint(e, a, t) {
 
 function DatatableInitializeGroup(e, a, t) {
     if (!$.fn.DataTable.isDataTable(e))
-    var r = $(e).DataTable({
-        language: {
-            sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros", sZeroRecords: "No se encontraron resultados",
-            sEmptyTable: "Ningún dato disponible en esta tabla", sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros", sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-            sInfoPostFix: "", sSearch: "Buscar:", sUrl: "", sInfoThousands: ",", sLoadingRecords: "Cargando...",
-            oPaginate: { sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior" },
-            oAria: {
-                sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-                sSortDescending: ": Activar para ordenar la columna de manera descendente"
-            }
-        },
-        rowGroup: {
-            dataSrc: function (row) {
-                return row[0];
-            }
-        },
-        columnDefs: a,
-        scrollY: t,
-        dom: "<'ui grid'<'row'<'col-6'l><'col-5'f><'col-1'B>><'row dt-table'<'col-12'tr>><'row'<'col-6'i><'col-6'p>>>",
-        buttons: [
-            {
-                extend: 'print',
-                text: ' <i class="nav-icon fas fa-print"></i>',
-                titleAttr: 'Imprimir',
-                footer: true,
-                customize: function (win) {
-                    var last = null;
-                    var current = null;
-                    var bod = [];
-                    var css = '@page {size: Letter landscape; }',
-                        head = win.document.head || win.document.getElementsByTagName('head')[0],
-                        body = win.document.body || win.document.getElementsByTagName('body')[0],
-                        style = win.document.createElement('style');
-                    style.type = 'text/css';
-                    style.media = 'print';
+        var r = $(e).DataTable({
+            language: {
+                sProcessing: "Procesando...", sLengthMenu: "Mostrar _MENU_ registros", sZeroRecords: "No se encontraron resultados",
+                sEmptyTable: "Ningún dato disponible en esta tabla", sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros", sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sInfoPostFix: "", sSearch: "Buscar:", sUrl: "", sInfoThousands: ",", sLoadingRecords: "Cargando...",
+                oPaginate: { sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior" },
+                oAria: {
+                    sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sSortDescending: ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            rowGroup: {
+                dataSrc: function (row) {
+                    return row[0];
+                }
+            },
+            columnDefs: a,
+            scrollY: t,
+            dom: "<'ui grid'<'row'<'col-6'l><'col-5'f><'col-1'B>><'row dt-table'<'col-12'tr>><'row'<'col-6'i><'col-6'p>>>",
+            buttons: [
+                {
+                    extend: 'print',
+                    text: ' <i class="nav-icon fas fa-print"></i>',
+                    titleAttr: 'Imprimir',
+                    footer: true,
+                    customize: function (win) {
+                        var last = null;
+                        var current = null;
+                        var bod = [];
+                        var css = '@page {size: Letter landscape; }',
+                            head = win.document.head || win.document.getElementsByTagName('head')[0],
+                            body = win.document.body || win.document.getElementsByTagName('body')[0],
+                            style = win.document.createElement('style');
+                        style.type = 'text/css';
+                        style.media = 'print';
 
-                    if (style.styleSheet) {
-                        style.styleSheet.cssText = css;
-                    }
-                    else {
-                        style.appendChild(win.document.createTextNode(css));
-                    }
-                    head.appendChild(style);
-                    var img = document.createElement("img");
-                    img.src = "~/images/logo-small.png";
+                        if (style.styleSheet) {
+                            style.styleSheet.cssText = css;
+                        }
+                        else {
+                            style.appendChild(win.document.createTextNode(css));
+                        }
+                        head.appendChild(style);
+                        var img = document.createElement("img");
+                        img.src = "~/images/logo-small.png";
 
-                    body.prepend(img);
-                   
-                },
-               
-            }, {
-                extend: 'excel',
-                text: ' <i  class="nav-icon fas fa-file-excel"></i>',
-                titleAttr: 'Exportar a excel',
+                        body.prepend(img);
 
-            }
-        ],
-    })
+                    },
+
+                }, {
+                    extend: 'excel',
+                    text: ' <i  class="nav-icon fas fa-file-excel"></i>',
+                    titleAttr: 'Exportar a excel',
+
+                }
+            ],
+        })
     return r;
 }
 
@@ -404,11 +435,11 @@ function DatatableInitializeGroup2(e, a, t) {
 
 (function ($) {
     try {
-        
+
         $.fn.dataTable.render.GeneraCheck = function () {
             return function (d, type, row) {
                 if (d) {
-                    return '<input type="checkbox" class="checkG checkN"   id="checkm'+d+'" />';
+                    return '<input type="checkbox" class="checkG checkN"   id="checkm' + d + '" />';
                 } else {
                     return '';
                 }
@@ -425,7 +456,7 @@ function DatatableInitializeGroup2(e, a, t) {
 
             };
         }
-        
+
         $.fn.dataTable.render.Generaradio = function () {
             return function (d, type, row) {
                 if (d) {
@@ -438,25 +469,25 @@ function DatatableInitializeGroup2(e, a, t) {
         }
         $.fn.dataTable.render.Meses = function () {
             return function (d, type, row) {
-                return GeneraCell(d, row.CheckS,1);
+                return GeneraCell(d, row.CheckS, 1);
             };
         }
 
         $.fn.dataTable.render.RDia = function () {
             return function (d, type, row) {
-                return GeneraCell(d, row.CheckS,2);
+                return GeneraCell(d, row.CheckS, 2);
             };
         }
         $.fn.dataTable.render.TEvento = function () {
             return function (d, type, row) {
-                return GeneraCell(d, row.TEvento,3);
+                return GeneraCell(d, row.TEvento, 3);
             };
         }
 
         $.fn.dataTable.render.buttonsx = function (tp) {
             return function (d, type, row) {
                 if (d) {
-                    return "<button type='button' class='btn btn-primary btn-sm' title='Agregar' onclick='addContacto(" + d + "," + tp+")'><i class='fas fa-user-check'></i></button>";
+                    return "<button type='button' class='btn btn-primary btn-sm' title='Agregar' onclick='addContacto(" + d + "," + tp + ")'><i class='fas fa-user-check'></i></button>";
                 } else {
                     return "";
                 }
@@ -538,7 +569,7 @@ function DatatableInitializeGroup2(e, a, t) {
                         if (!hc)
                             o[this.name] = this.value || '';
                         else
-                            o[this.name] = this.value.replace("%","").replace(/,/g, '') || '';
+                            o[this.name] = this.value.replace("%", "").replace(/,/g, '') || '';
                     else if (t == "checkbox")
                         o[this.name] = $("#" + this.name).is(":checked")
                 }
@@ -623,7 +654,7 @@ function dttmdt(date) {
 
 function FormatDatex(d) {
     if (d) {
-       var month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();
+        var month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();
         if (month.length < 2)
             month = '0' + month;
         if (day.length < 2)
@@ -715,7 +746,7 @@ function GeneraCell(d, id, Op) {
                     NomEq = splitf1[0].substring(0, 5) + " - " + splitf2[0].substring(0, 5);
                 }
             }
-        } 
+        }
 
         return '<div ' + oncl + ' style="height: 100%;width: 100%;background-color: ' + sdata[1] + ';text-align: center;vertical-align: middle;display: table;"><label style="align-items: center;vertical-align: middle;display: table-cell;color: ' + sdata[2] + ' !important;' + styleex + '">' + NomEq + '</label></div>';
     } else {
